@@ -1,12 +1,21 @@
 import { Link } from "@tanstack/react-router"
 import { Dumbbell } from "lucide-react"
+import { useState } from "react"
+
+import { buttonVariants } from "./ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
+// import { useSupabaseClient } from "@supabase/auth-helpers-react"
 
 // import createSupabaseBrowserClient from "@/lib/supabase/client"
 // import logoutAction from "@/server/actions/logoutAction"
 
 export default function Nav() {
-  // const [user, setUser] = useState<string | null>(null)
-  // const router = useRouter()
+  const [user, setUser] = useState<string | null>(null)
 
   // useEffect(() => {
   //   const supabase = createSupabaseBrowserClient()
@@ -43,10 +52,11 @@ export default function Nav() {
       </Link>
 
       {/* Desktop Navigation */}
-      {/* <div className="hidden gap-3 md:flex">
+      <div className="hidden gap-3 md:flex">
         <Link
           className={buttonVariants({ variant: "outline" })}
-          to="/exercises/p/1"
+          params={{ page: "1" }}
+          to="/exercises/p/$page"
         >
           Exercises
         </Link>
@@ -66,24 +76,21 @@ export default function Nav() {
             </Link>
             <button
               className={buttonVariants({ variant: "default" })}
-              onClick={handleLogout}
+              // onClick={handleLogout}
               type="button"
             >
               Logout
             </button>
           </>
         ) : (
-          <Link
-            className={buttonVariants({ variant: "default" })}
-            to="/login"
-          >
+          <Link className={buttonVariants({ variant: "default" })} to="/login">
             Sign In
           </Link>
         )}
-      </div> */}
+      </div>
 
       {/* Mobile Navigation */}
-      {/* <div className="relative flex gap-3 md:hidden">
+      <div className="relative flex gap-3 md:hidden">
         {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -96,7 +103,9 @@ export default function Nav() {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>
-                <Link to="/exercises/p/1">Exercises</Link>
+                <Link params={{ page: "1" }} to="/exercises/p/$page">
+                  Exercises
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link to="/plans">Plans</Link>
@@ -104,22 +113,19 @@ export default function Nav() {
               <DropdownMenuItem>
                 <Link to="/workouts">Workouts</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              {/* <DropdownMenuItem>
                 <button onClick={handleLogout} type="button">
                   Logout
                 </button>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Link
-            className={buttonVariants({ variant: "default" })}
-            to="/login"
-          >
+          <Link className={buttonVariants({ variant: "default" })} to="/login">
             Sign In
           </Link>
         )}
-      </div> */}
+      </div>
     </nav>
   )
 }

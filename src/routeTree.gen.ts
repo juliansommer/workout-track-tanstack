@@ -9,32 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as WorkoutsIndexRouteImport } from './routes/workouts/index'
-import { Route as PlansIndexRouteImport } from './routes/plans/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
-import { Route as WorkoutsWorkoutRouteImport } from './routes/workouts/$workout'
-import { Route as PlansCreateRouteImport } from './routes/plans/create'
 import { Route as ExercisesExerciseRouteImport } from './routes/exercises/$exercise'
-import { Route as WorkoutsCreateIndexRouteImport } from './routes/workouts/create/index'
-import { Route as PlansPlanIndexRouteImport } from './routes/plans/$plan/index'
-import { Route as WorkoutsCreateIdRouteImport } from './routes/workouts/create/$id'
-import { Route as PlansPlanEditRouteImport } from './routes/plans/$plan/edit'
+import { Route as AuthedWorkoutsIndexRouteImport } from './routes/_authed/workouts/index'
+import { Route as AuthedPlansIndexRouteImport } from './routes/_authed/plans/index'
 import { Route as ExercisesPPageRouteImport } from './routes/exercises/p/$page'
+import { Route as AuthedWorkoutsWorkoutRouteImport } from './routes/_authed/workouts/$workout'
+import { Route as AuthedPlansCreateRouteImport } from './routes/_authed/plans/create'
+import { Route as AuthedWorkoutsCreateIndexRouteImport } from './routes/_authed/workouts/create/index'
+import { Route as AuthedPlansPlanIndexRouteImport } from './routes/_authed/plans/$plan/index'
+import { Route as AuthedWorkoutsCreateIdRouteImport } from './routes/_authed/workouts/create/$id'
+import { Route as AuthedPlansPlanEditRouteImport } from './routes/_authed/plans/$plan/edit'
 
+const AuthedRoute = AuthedRouteImport.update({
+  id: '/_authed',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const WorkoutsIndexRoute = WorkoutsIndexRouteImport.update({
-  id: '/workouts/',
-  path: '/workouts/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlansIndexRoute = PlansIndexRouteImport.update({
-  id: '/plans/',
-  path: '/plans/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginIndexRoute = LoginIndexRouteImport.update({
@@ -42,101 +37,113 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WorkoutsWorkoutRoute = WorkoutsWorkoutRouteImport.update({
-  id: '/workouts/$workout',
-  path: '/workouts/$workout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlansCreateRoute = PlansCreateRouteImport.update({
-  id: '/plans/create',
-  path: '/plans/create',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ExercisesExerciseRoute = ExercisesExerciseRouteImport.update({
   id: '/exercises/$exercise',
   path: '/exercises/$exercise',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WorkoutsCreateIndexRoute = WorkoutsCreateIndexRouteImport.update({
-  id: '/workouts/create/',
-  path: '/workouts/create/',
-  getParentRoute: () => rootRouteImport,
+const AuthedWorkoutsIndexRoute = AuthedWorkoutsIndexRouteImport.update({
+  id: '/workouts/',
+  path: '/workouts/',
+  getParentRoute: () => AuthedRoute,
 } as any)
-const PlansPlanIndexRoute = PlansPlanIndexRouteImport.update({
-  id: '/plans/$plan/',
-  path: '/plans/$plan/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const WorkoutsCreateIdRoute = WorkoutsCreateIdRouteImport.update({
-  id: '/workouts/create/$id',
-  path: '/workouts/create/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlansPlanEditRoute = PlansPlanEditRouteImport.update({
-  id: '/plans/$plan/edit',
-  path: '/plans/$plan/edit',
-  getParentRoute: () => rootRouteImport,
+const AuthedPlansIndexRoute = AuthedPlansIndexRouteImport.update({
+  id: '/plans/',
+  path: '/plans/',
+  getParentRoute: () => AuthedRoute,
 } as any)
 const ExercisesPPageRoute = ExercisesPPageRouteImport.update({
   id: '/exercises/p/$page',
   path: '/exercises/p/$page',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthedWorkoutsWorkoutRoute = AuthedWorkoutsWorkoutRouteImport.update({
+  id: '/workouts/$workout',
+  path: '/workouts/$workout',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedPlansCreateRoute = AuthedPlansCreateRouteImport.update({
+  id: '/plans/create',
+  path: '/plans/create',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedWorkoutsCreateIndexRoute =
+  AuthedWorkoutsCreateIndexRouteImport.update({
+    id: '/workouts/create/',
+    path: '/workouts/create/',
+    getParentRoute: () => AuthedRoute,
+  } as any)
+const AuthedPlansPlanIndexRoute = AuthedPlansPlanIndexRouteImport.update({
+  id: '/plans/$plan/',
+  path: '/plans/$plan/',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedWorkoutsCreateIdRoute = AuthedWorkoutsCreateIdRouteImport.update({
+  id: '/workouts/create/$id',
+  path: '/workouts/create/$id',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedPlansPlanEditRoute = AuthedPlansPlanEditRouteImport.update({
+  id: '/plans/$plan/edit',
+  path: '/plans/$plan/edit',
+  getParentRoute: () => AuthedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/exercises/$exercise': typeof ExercisesExerciseRoute
-  '/plans/create': typeof PlansCreateRoute
-  '/workouts/$workout': typeof WorkoutsWorkoutRoute
   '/login': typeof LoginIndexRoute
-  '/plans': typeof PlansIndexRoute
-  '/workouts': typeof WorkoutsIndexRoute
+  '/plans/create': typeof AuthedPlansCreateRoute
+  '/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
-  '/plans/$plan/edit': typeof PlansPlanEditRoute
-  '/workouts/create/$id': typeof WorkoutsCreateIdRoute
-  '/plans/$plan': typeof PlansPlanIndexRoute
-  '/workouts/create': typeof WorkoutsCreateIndexRoute
+  '/plans': typeof AuthedPlansIndexRoute
+  '/workouts': typeof AuthedWorkoutsIndexRoute
+  '/plans/$plan/edit': typeof AuthedPlansPlanEditRoute
+  '/workouts/create/$id': typeof AuthedWorkoutsCreateIdRoute
+  '/plans/$plan': typeof AuthedPlansPlanIndexRoute
+  '/workouts/create': typeof AuthedWorkoutsCreateIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/exercises/$exercise': typeof ExercisesExerciseRoute
-  '/plans/create': typeof PlansCreateRoute
-  '/workouts/$workout': typeof WorkoutsWorkoutRoute
   '/login': typeof LoginIndexRoute
-  '/plans': typeof PlansIndexRoute
-  '/workouts': typeof WorkoutsIndexRoute
+  '/plans/create': typeof AuthedPlansCreateRoute
+  '/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
-  '/plans/$plan/edit': typeof PlansPlanEditRoute
-  '/workouts/create/$id': typeof WorkoutsCreateIdRoute
-  '/plans/$plan': typeof PlansPlanIndexRoute
-  '/workouts/create': typeof WorkoutsCreateIndexRoute
+  '/plans': typeof AuthedPlansIndexRoute
+  '/workouts': typeof AuthedWorkoutsIndexRoute
+  '/plans/$plan/edit': typeof AuthedPlansPlanEditRoute
+  '/workouts/create/$id': typeof AuthedWorkoutsCreateIdRoute
+  '/plans/$plan': typeof AuthedPlansPlanIndexRoute
+  '/workouts/create': typeof AuthedWorkoutsCreateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authed': typeof AuthedRouteWithChildren
   '/exercises/$exercise': typeof ExercisesExerciseRoute
-  '/plans/create': typeof PlansCreateRoute
-  '/workouts/$workout': typeof WorkoutsWorkoutRoute
   '/login/': typeof LoginIndexRoute
-  '/plans/': typeof PlansIndexRoute
-  '/workouts/': typeof WorkoutsIndexRoute
+  '/_authed/plans/create': typeof AuthedPlansCreateRoute
+  '/_authed/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
-  '/plans/$plan/edit': typeof PlansPlanEditRoute
-  '/workouts/create/$id': typeof WorkoutsCreateIdRoute
-  '/plans/$plan/': typeof PlansPlanIndexRoute
-  '/workouts/create/': typeof WorkoutsCreateIndexRoute
+  '/_authed/plans/': typeof AuthedPlansIndexRoute
+  '/_authed/workouts/': typeof AuthedWorkoutsIndexRoute
+  '/_authed/plans/$plan/edit': typeof AuthedPlansPlanEditRoute
+  '/_authed/workouts/create/$id': typeof AuthedWorkoutsCreateIdRoute
+  '/_authed/plans/$plan/': typeof AuthedPlansPlanIndexRoute
+  '/_authed/workouts/create/': typeof AuthedWorkoutsCreateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/exercises/$exercise'
+    | '/login'
     | '/plans/create'
     | '/workouts/$workout'
-    | '/login'
+    | '/exercises/p/$page'
     | '/plans'
     | '/workouts'
-    | '/exercises/p/$page'
     | '/plans/$plan/edit'
     | '/workouts/create/$id'
     | '/plans/$plan'
@@ -145,12 +152,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/exercises/$exercise'
+    | '/login'
     | '/plans/create'
     | '/workouts/$workout'
-    | '/login'
+    | '/exercises/p/$page'
     | '/plans'
     | '/workouts'
-    | '/exercises/p/$page'
     | '/plans/$plan/edit'
     | '/workouts/create/$id'
     | '/plans/$plan'
@@ -158,55 +165,42 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authed'
     | '/exercises/$exercise'
-    | '/plans/create'
-    | '/workouts/$workout'
     | '/login/'
-    | '/plans/'
-    | '/workouts/'
+    | '/_authed/plans/create'
+    | '/_authed/workouts/$workout'
     | '/exercises/p/$page'
-    | '/plans/$plan/edit'
-    | '/workouts/create/$id'
-    | '/plans/$plan/'
-    | '/workouts/create/'
+    | '/_authed/plans/'
+    | '/_authed/workouts/'
+    | '/_authed/plans/$plan/edit'
+    | '/_authed/workouts/create/$id'
+    | '/_authed/plans/$plan/'
+    | '/_authed/workouts/create/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthedRoute: typeof AuthedRouteWithChildren
   ExercisesExerciseRoute: typeof ExercisesExerciseRoute
-  PlansCreateRoute: typeof PlansCreateRoute
-  WorkoutsWorkoutRoute: typeof WorkoutsWorkoutRoute
   LoginIndexRoute: typeof LoginIndexRoute
-  PlansIndexRoute: typeof PlansIndexRoute
-  WorkoutsIndexRoute: typeof WorkoutsIndexRoute
   ExercisesPPageRoute: typeof ExercisesPPageRoute
-  PlansPlanEditRoute: typeof PlansPlanEditRoute
-  WorkoutsCreateIdRoute: typeof WorkoutsCreateIdRoute
-  PlansPlanIndexRoute: typeof PlansPlanIndexRoute
-  WorkoutsCreateIndexRoute: typeof WorkoutsCreateIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_authed': {
+      id: '/_authed'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/workouts/': {
-      id: '/workouts/'
-      path: '/workouts'
-      fullPath: '/workouts'
-      preLoaderRoute: typeof WorkoutsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/plans/': {
-      id: '/plans/'
-      path: '/plans'
-      fullPath: '/plans'
-      preLoaderRoute: typeof PlansIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login/': {
@@ -216,20 +210,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/workouts/$workout': {
-      id: '/workouts/$workout'
-      path: '/workouts/$workout'
-      fullPath: '/workouts/$workout'
-      preLoaderRoute: typeof WorkoutsWorkoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/plans/create': {
-      id: '/plans/create'
-      path: '/plans/create'
-      fullPath: '/plans/create'
-      preLoaderRoute: typeof PlansCreateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/exercises/$exercise': {
       id: '/exercises/$exercise'
       path: '/exercises/$exercise'
@@ -237,33 +217,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExercisesExerciseRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/workouts/create/': {
-      id: '/workouts/create/'
-      path: '/workouts/create'
-      fullPath: '/workouts/create'
-      preLoaderRoute: typeof WorkoutsCreateIndexRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authed/workouts/': {
+      id: '/_authed/workouts/'
+      path: '/workouts'
+      fullPath: '/workouts'
+      preLoaderRoute: typeof AuthedWorkoutsIndexRouteImport
+      parentRoute: typeof AuthedRoute
     }
-    '/plans/$plan/': {
-      id: '/plans/$plan/'
-      path: '/plans/$plan'
-      fullPath: '/plans/$plan'
-      preLoaderRoute: typeof PlansPlanIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/workouts/create/$id': {
-      id: '/workouts/create/$id'
-      path: '/workouts/create/$id'
-      fullPath: '/workouts/create/$id'
-      preLoaderRoute: typeof WorkoutsCreateIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/plans/$plan/edit': {
-      id: '/plans/$plan/edit'
-      path: '/plans/$plan/edit'
-      fullPath: '/plans/$plan/edit'
-      preLoaderRoute: typeof PlansPlanEditRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authed/plans/': {
+      id: '/_authed/plans/'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof AuthedPlansIndexRouteImport
+      parentRoute: typeof AuthedRoute
     }
     '/exercises/p/$page': {
       id: '/exercises/p/$page'
@@ -272,22 +238,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExercisesPPageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authed/workouts/$workout': {
+      id: '/_authed/workouts/$workout'
+      path: '/workouts/$workout'
+      fullPath: '/workouts/$workout'
+      preLoaderRoute: typeof AuthedWorkoutsWorkoutRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/plans/create': {
+      id: '/_authed/plans/create'
+      path: '/plans/create'
+      fullPath: '/plans/create'
+      preLoaderRoute: typeof AuthedPlansCreateRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/workouts/create/': {
+      id: '/_authed/workouts/create/'
+      path: '/workouts/create'
+      fullPath: '/workouts/create'
+      preLoaderRoute: typeof AuthedWorkoutsCreateIndexRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/plans/$plan/': {
+      id: '/_authed/plans/$plan/'
+      path: '/plans/$plan'
+      fullPath: '/plans/$plan'
+      preLoaderRoute: typeof AuthedPlansPlanIndexRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/workouts/create/$id': {
+      id: '/_authed/workouts/create/$id'
+      path: '/workouts/create/$id'
+      fullPath: '/workouts/create/$id'
+      preLoaderRoute: typeof AuthedWorkoutsCreateIdRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/plans/$plan/edit': {
+      id: '/_authed/plans/$plan/edit'
+      path: '/plans/$plan/edit'
+      fullPath: '/plans/$plan/edit'
+      preLoaderRoute: typeof AuthedPlansPlanEditRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
+interface AuthedRouteChildren {
+  AuthedPlansCreateRoute: typeof AuthedPlansCreateRoute
+  AuthedWorkoutsWorkoutRoute: typeof AuthedWorkoutsWorkoutRoute
+  AuthedPlansIndexRoute: typeof AuthedPlansIndexRoute
+  AuthedWorkoutsIndexRoute: typeof AuthedWorkoutsIndexRoute
+  AuthedPlansPlanEditRoute: typeof AuthedPlansPlanEditRoute
+  AuthedWorkoutsCreateIdRoute: typeof AuthedWorkoutsCreateIdRoute
+  AuthedPlansPlanIndexRoute: typeof AuthedPlansPlanIndexRoute
+  AuthedWorkoutsCreateIndexRoute: typeof AuthedWorkoutsCreateIndexRoute
+}
+
+const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedPlansCreateRoute: AuthedPlansCreateRoute,
+  AuthedWorkoutsWorkoutRoute: AuthedWorkoutsWorkoutRoute,
+  AuthedPlansIndexRoute: AuthedPlansIndexRoute,
+  AuthedWorkoutsIndexRoute: AuthedWorkoutsIndexRoute,
+  AuthedPlansPlanEditRoute: AuthedPlansPlanEditRoute,
+  AuthedWorkoutsCreateIdRoute: AuthedWorkoutsCreateIdRoute,
+  AuthedPlansPlanIndexRoute: AuthedPlansPlanIndexRoute,
+  AuthedWorkoutsCreateIndexRoute: AuthedWorkoutsCreateIndexRoute,
+}
+
+const AuthedRouteWithChildren =
+  AuthedRoute._addFileChildren(AuthedRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthedRoute: AuthedRouteWithChildren,
   ExercisesExerciseRoute: ExercisesExerciseRoute,
-  PlansCreateRoute: PlansCreateRoute,
-  WorkoutsWorkoutRoute: WorkoutsWorkoutRoute,
   LoginIndexRoute: LoginIndexRoute,
-  PlansIndexRoute: PlansIndexRoute,
-  WorkoutsIndexRoute: WorkoutsIndexRoute,
   ExercisesPPageRoute: ExercisesPPageRoute,
-  PlansPlanEditRoute: PlansPlanEditRoute,
-  WorkoutsCreateIdRoute: WorkoutsCreateIdRoute,
-  PlansPlanIndexRoute: PlansPlanIndexRoute,
-  WorkoutsCreateIndexRoute: WorkoutsCreateIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

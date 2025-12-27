@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/plans/$plan/")({
+export const Route = createFileRoute("/_authed/workouts/$workout")({
   head: () => ({
     meta: [
       {
-        title: "Plan Details",
+        title: "Workout",
       },
     ],
   }),
@@ -12,5 +12,5 @@ export const Route = createFileRoute("/plans/$plan/")({
 })
 
 function Comp() {
-  return <div>Plan Details Page</div>
+  return <div>Workout Page</div>
 }

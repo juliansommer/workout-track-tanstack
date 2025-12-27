@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/workouts/create/$id")({
+export const Route = createFileRoute("/_authed/workouts/create/$id")({
   head: () => ({
     meta: [
       {
