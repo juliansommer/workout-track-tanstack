@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router"
 
+// biome-ignore lint/suspicious/noExplicitAny: valid
 export function NotFound({ children }: { children?: any }) {
   return (
     <div className="space-y-2 p-2">
@@ -10,6 +11,7 @@ export function NotFound({ children }: { children?: any }) {
         <button
           className="rounded-sm bg-emerald-500 px-2 py-1 font-black text-sm text-white uppercase"
           onClick={() => window.history.back()}
+          type="button"
         >
           Go back
         </button>

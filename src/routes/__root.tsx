@@ -1,7 +1,4 @@
-/// <reference types="vite/client" />
-
 import type { QueryClient } from "@tanstack/react-query"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -9,13 +6,12 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router"
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 import type * as React from "react"
 
-import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary"
-import { NotFound } from "~/components/NotFound"
-import appCss from "~/styles/app.css?url"
-import { seo } from "~/utils/seo"
+import { DefaultCatchBoundary } from "@/components/default-catch-boundary"
+import { NotFound } from "@/components/not-found"
+import { seo } from "@/lib/seo"
+import appCss from "@/styles/app.css?url"
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
@@ -30,10 +26,10 @@ export const Route = createRootRouteWithContext<{
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title:
-          "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
+        title: "Workout Track",
         description:
-          "TanStack Start is a type-safe, client-first, full-stack React framework. ",
+          "Workout Track is an open source app that helps you monitor your workouts, set goals, and achieve your fitness dreams.",
+        image: "/opengraph-image.png",
       }),
     ],
     links: [
@@ -43,19 +39,6 @@ export const Route = createRootRouteWithContext<{
         sizes: "180x180",
         href: "/apple-touch-icon.png",
       },
-      {
-        rel: "icon",
-        type: "image/png",
-        sizes: "32x32",
-        href: "/favicon-32x32.png",
-      },
-      {
-        rel: "icon",
-        type: "image/png",
-        sizes: "16x16",
-        href: "/favicon-16x16.png",
-      },
-      { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
@@ -80,7 +63,7 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
@@ -95,52 +78,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           >
             Home
           </Link>{" "}
-          <Link
-            activeProps={{
-              className: "font-bold",
-            }}
-            to="/posts"
-          >
-            Posts
-          </Link>{" "}
-          <Link
-            activeProps={{
-              className: "font-bold",
-            }}
-            to="/users"
-          >
-            Users
-          </Link>{" "}
-          <Link
-            activeProps={{
-              className: "font-bold",
-            }}
-            to="/route-a"
-          >
-            Pathless Layout
-          </Link>{" "}
-          <Link
-            activeProps={{
-              className: "font-bold",
-            }}
-            to="/deferred"
-          >
-            Deferred
-          </Link>{" "}
-          <Link
-            // @ts-expect-error
-            activeProps={{
-              className: "font-bold",
-            }}
-            to="/this-route-does-not-exist"
-          >
-            This Route Does Not Exist
-          </Link>
         </div>
         <hr />
         {children}
-        <TanStackRouterDevtools position="bottom-right" />
-        <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
       </body>
     </html>
