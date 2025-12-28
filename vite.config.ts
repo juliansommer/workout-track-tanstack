@@ -17,7 +17,7 @@ export default defineConfig({
   plugins: [
     validateEnv(),
     tanstackStart(),
-    nitro({ preset: "bun" }),
+    nitro(),
     viteReact({
       babel: {
         plugins: ["babel-plugin-react-compiler"],
