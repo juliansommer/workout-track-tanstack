@@ -20,7 +20,7 @@ export const Route = createFileRoute("/auth/callback")({
               // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
               redirectUrl = `${url.origin}`
             } else if (forwardedHost) {
-              redirectUrl = `https://${forwardedHost}}`
+              redirectUrl = `https://${forwardedHost}`
             } else {
               redirectUrl = `${url.origin}}`
             }
