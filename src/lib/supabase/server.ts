@@ -4,7 +4,7 @@ import { getCookies, setCookie } from "@tanstack/react-start/server"
 
 import type { Database } from "@/types/supabase"
 
-export function getSupabaseServerClient() {
+export function createSupabaseServerClient() {
   return createServerClient<Database>(
     process.env.VITE_SUPABASE_URL ?? "",
     process.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "",
@@ -18,7 +18,7 @@ export function getSupabaseServerClient() {
         },
         setAll(cookies) {
           cookies.forEach((cookie) => {
-            setCookie(cookie.name, cookie.value)
+            setCookie(cookie.name, cookie.value, cookie.options)
           })
         },
       },

@@ -2,9 +2,9 @@ import { createBrowserClient } from "@supabase/ssr"
 
 import type { Database } from "@/types/supabase"
 
-export default function createSupabaseBrowserClient() {
+export function createSupabaseBrowserClient() {
   return createBrowserClient<Database>(
-    process.env.VITE_SUPABASE_URL ?? "",
-    process.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "",
+    import.meta.env.VITE_SUPABASE_URL ?? "",
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "",
   )
 }

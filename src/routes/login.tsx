@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/login/")({
+import { LoginForm } from "@/components/login-form"
+
+export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
       {
@@ -8,9 +10,5 @@ export const Route = createFileRoute("/login/")({
       },
     ],
   }),
-  component: Comp,
+  component: LoginForm,
 })
-
-function Comp() {
-  return <div>Login Page</div>
-}

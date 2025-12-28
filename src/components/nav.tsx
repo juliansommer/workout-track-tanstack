@@ -1,7 +1,8 @@
-import { Link } from "@tanstack/react-router"
+import { Link, useRouter } from "@tanstack/react-router"
 import { Dumbbell } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
+import { createSupabaseBrowserClient } from "@/lib/supabase/client"
 import { buttonVariants } from "./ui/button"
 import {
   DropdownMenu,
@@ -9,40 +10,37 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
-// import { useSupabaseClient } from "@supabase/auth-helpers-react"
-
-// import createSupabaseBrowserClient from "@/lib/supabase/client"
-// import logoutAction from "@/server/actions/logoutAction"
 
 export default function Nav() {
   const [user, setUser] = useState<string | null>(null)
+  const router = useRouter()
 
-  // useEffect(() => {
-  //   const supabase = createSupabaseBrowserClient()
-  //   async function fetchUser() {
-  //     const {
-  //       data: { session },
-  //     } = await supabase.auth.getSession()
-  //     setUser(session?.user?.id ?? null)
-  //   }
-  //   fetchUser()
+  useEffect(() => {
+    const supabase = createSupabaseBrowserClient()
+    async function fetchUser() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+      setUser(session?.user?.id ?? null)
+    }
+    fetchUser()
 
-  //   const {
-  //     data: { subscription },
-  //   } = supabase.auth.onAuthStateChange((_event, session) => {
-  //     setUser(session?.user?.id ?? null)
-  //   })
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user?.id ?? null)
+    })
 
-  //   return () => {
-  //     subscription.unsubscribe()
-  //   }
-  // }, [])
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
 
-  // async function handleLogout() {
-  //   setUser(null)
-  //   await logoutAction()
-  //   router.push("/")
-  // }
+  async function handleLogout() {
+    const supabase = createSupabaseBrowserClient()
+    await supabase.auth.signOut()
+    router.navigate({ to: "/" })
+  }
 
   return (
     <nav className="mb-16 flex h-full w-full flex-between items-center justify-between pt-3">
@@ -76,7 +74,7 @@ export default function Nav() {
             </Link>
             <button
               className={buttonVariants({ variant: "default" })}
-              // onClick={handleLogout}
+              onClick={handleLogout}
               type="button"
             >
               Logout
@@ -113,11 +111,11 @@ export default function Nav() {
               <DropdownMenuItem>
                 <Link to="/workouts">Workouts</Link>
               </DropdownMenuItem>
-              {/* <DropdownMenuItem>
+              <DropdownMenuItem>
                 <button onClick={handleLogout} type="button">
                   Logout
                 </button>
-              </DropdownMenuItem> */}
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (

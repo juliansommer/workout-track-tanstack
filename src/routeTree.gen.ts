@@ -9,10 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as ExercisesExerciseRouteImport } from './routes/exercises/$exercise'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as AuthedWorkoutsIndexRouteImport } from './routes/_authed/workouts/index'
 import { Route as AuthedPlansIndexRouteImport } from './routes/_authed/plans/index'
 import { Route as ExercisesPPageRouteImport } from './routes/exercises/p/$page'
@@ -23,6 +24,11 @@ import { Route as AuthedPlansPlanIndexRouteImport } from './routes/_authed/plans
 import { Route as AuthedWorkoutsCreateIdRouteImport } from './routes/_authed/workouts/create/$id'
 import { Route as AuthedPlansPlanEditRouteImport } from './routes/_authed/plans/$plan/edit'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthedRoute = AuthedRouteImport.update({
   id: '/_authed',
   getParentRoute: () => rootRouteImport,
@@ -32,14 +38,14 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginIndexRoute = LoginIndexRouteImport.update({
-  id: '/login/',
-  path: '/login/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ExercisesExerciseRoute = ExercisesExerciseRouteImport.update({
   id: '/exercises/$exercise',
   path: '/exercises/$exercise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedWorkoutsIndexRoute = AuthedWorkoutsIndexRouteImport.update({
@@ -91,8 +97,9 @@ const AuthedPlansPlanEditRoute = AuthedPlansPlanEditRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/exercises/$exercise': typeof ExercisesExerciseRoute
-  '/login': typeof LoginIndexRoute
   '/plans/create': typeof AuthedPlansCreateRoute
   '/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
@@ -105,8 +112,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/exercises/$exercise': typeof ExercisesExerciseRoute
-  '/login': typeof LoginIndexRoute
   '/plans/create': typeof AuthedPlansCreateRoute
   '/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
@@ -121,8 +129,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/exercises/$exercise': typeof ExercisesExerciseRoute
-  '/login/': typeof LoginIndexRoute
   '/_authed/plans/create': typeof AuthedPlansCreateRoute
   '/_authed/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
@@ -137,8 +146,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/exercises/$exercise'
     | '/login'
+    | '/auth/callback'
+    | '/exercises/$exercise'
     | '/plans/create'
     | '/workouts/$workout'
     | '/exercises/p/$page'
@@ -151,8 +161,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/exercises/$exercise'
     | '/login'
+    | '/auth/callback'
+    | '/exercises/$exercise'
     | '/plans/create'
     | '/workouts/$workout'
     | '/exercises/p/$page'
@@ -166,8 +177,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authed'
+    | '/login'
+    | '/auth/callback'
     | '/exercises/$exercise'
-    | '/login/'
     | '/_authed/plans/create'
     | '/_authed/workouts/$workout'
     | '/exercises/p/$page'
@@ -182,13 +194,21 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthedRoute: typeof AuthedRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
   ExercisesExerciseRoute: typeof ExercisesExerciseRoute
-  LoginIndexRoute: typeof LoginIndexRoute
   ExercisesPPageRoute: typeof ExercisesPPageRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authed': {
       id: '/_authed'
       path: ''
@@ -203,18 +223,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login/': {
-      id: '/login/'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/exercises/$exercise': {
       id: '/exercises/$exercise'
       path: '/exercises/$exercise'
       fullPath: '/exercises/$exercise'
       preLoaderRoute: typeof ExercisesExerciseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authed/workouts/': {
@@ -311,8 +331,9 @@ const AuthedRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthedRoute: AuthedRouteWithChildren,
+  LoginRoute: LoginRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
   ExercisesExerciseRoute: ExercisesExerciseRoute,
-  LoginIndexRoute: LoginIndexRoute,
   ExercisesPPageRoute: ExercisesPPageRoute,
 }
 export const routeTree = rootRouteImport
