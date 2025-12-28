@@ -1,8 +1,8 @@
 /** biome-ignore-all lint/nursery/noReactForwardRef: can't change or will break */
 // The pagination the app is using is from hero-ui, but I didn't install their css
 // and other dependencies, so this is being used as the styling, whilst using their pagination logic
+import { Link } from "@tanstack/react-router"
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
-import Link from "next/link"
 import { type ComponentProps, forwardRef } from "react"
 
 import { type ButtonProps, buttonVariants } from "@/components/ui/button"
