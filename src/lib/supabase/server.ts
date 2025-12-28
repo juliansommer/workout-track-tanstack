@@ -6,8 +6,8 @@ import type { Database } from "@/types/supabase"
 
 export function createSupabaseServerClient() {
   return createServerClient<Database>(
-    process.env.VITE_SUPABASE_URL ?? "",
-    process.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "",
+    process.env.VITE_SUPABASE_URL,
+    process.env.VITE_SUPABASE_PUBLISHABLE_KEY,
     {
       cookies: {
         getAll() {

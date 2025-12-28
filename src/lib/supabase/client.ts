@@ -4,7 +4,7 @@ import type { Database } from "@/types/supabase"
 
 export function createSupabaseBrowserClient() {
   return createBrowserClient<Database>(
-    import.meta.env.VITE_SUPABASE_URL ?? "",
-    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "",
+    import.meta.env.VITE_SUPABASE_URL,
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
   )
 }
