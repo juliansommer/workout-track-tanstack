@@ -18,10 +18,10 @@ export const Route = createFileRoute("/exercises/$exercise")({
     }
     return data
   },
-  head: () => ({
+  head: ({ loaderData }) => ({
     meta: [
       {
-        title: "Exercise",
+        title: `${loaderData?.name ?? ""} Exercise`,
       },
     ],
   }),

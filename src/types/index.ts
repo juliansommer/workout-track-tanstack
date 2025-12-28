@@ -1,5 +1,3 @@
-import type { Database } from "@/types/supabase"
-
 export interface PlanData {
   id: string
   name: string
@@ -11,8 +9,3 @@ export interface PlanData {
     image: string
   }[]
 }
-
-export type ExerciseData = Pick<
-  Database["public"]["Tables"]["exercise"]["Row"],
-  "name" | "image" | "primary_muscles"
->

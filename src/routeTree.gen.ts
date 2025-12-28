@@ -12,11 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExercisesIndexRouteImport } from './routes/exercises/index'
 import { Route as ExercisesExerciseRouteImport } from './routes/exercises/$exercise'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as AuthedWorkoutsIndexRouteImport } from './routes/_authed/workouts/index'
 import { Route as AuthedPlansIndexRouteImport } from './routes/_authed/plans/index'
-import { Route as ExercisesPPageRouteImport } from './routes/exercises/p/$page'
+import { Route as ExercisesPPageRouteImport } from './routes/exercises/p.$page'
 import { Route as AuthedWorkoutsWorkoutRouteImport } from './routes/_authed/workouts/$workout'
 import { Route as AuthedPlansCreateRouteImport } from './routes/_authed/plans/create'
 import { Route as AuthedWorkoutsCreateIndexRouteImport } from './routes/_authed/workouts/create/index'
@@ -36,6 +37,11 @@ const AuthedRoute = AuthedRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExercisesIndexRoute = ExercisesIndexRouteImport.update({
+  id: '/exercises/',
+  path: '/exercises/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExercisesExerciseRoute = ExercisesExerciseRouteImport.update({
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/exercises/$exercise': typeof ExercisesExerciseRoute
+  '/exercises': typeof ExercisesIndexRoute
   '/plans/create': typeof AuthedPlansCreateRoute
   '/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/exercises/$exercise': typeof ExercisesExerciseRoute
+  '/exercises': typeof ExercisesIndexRoute
   '/plans/create': typeof AuthedPlansCreateRoute
   '/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/exercises/$exercise': typeof ExercisesExerciseRoute
+  '/exercises/': typeof ExercisesIndexRoute
   '/_authed/plans/create': typeof AuthedPlansCreateRoute
   '/_authed/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/auth/callback'
     | '/exercises/$exercise'
+    | '/exercises'
     | '/plans/create'
     | '/workouts/$workout'
     | '/exercises/p/$page'
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/auth/callback'
     | '/exercises/$exercise'
+    | '/exercises'
     | '/plans/create'
     | '/workouts/$workout'
     | '/exercises/p/$page'
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/auth/callback'
     | '/exercises/$exercise'
+    | '/exercises/'
     | '/_authed/plans/create'
     | '/_authed/workouts/$workout'
     | '/exercises/p/$page'
@@ -197,6 +209,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   ExercisesExerciseRoute: typeof ExercisesExerciseRoute
+  ExercisesIndexRoute: typeof ExercisesIndexRoute
   ExercisesPPageRoute: typeof ExercisesPPageRoute
 }
 
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exercises/': {
+      id: '/exercises/'
+      path: '/exercises'
+      fullPath: '/exercises'
+      preLoaderRoute: typeof ExercisesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/exercises/$exercise': {
@@ -334,6 +354,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   ExercisesExerciseRoute: ExercisesExerciseRoute,
+  ExercisesIndexRoute: ExercisesIndexRoute,
   ExercisesPPageRoute: ExercisesPPageRoute,
 }
 export const routeTree = rootRouteImport
