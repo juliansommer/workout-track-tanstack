@@ -29,6 +29,7 @@ export function cleanTimestamp(timestamp: string): string {
 
 const TRIM_HYPHENS_START_REGEX = /^-+/
 const TRIM_HYPHENS_END_REGEX = /-+$/
+const IMAGE_EXTENSION_REGEX = /\.(jpg|jpeg|png)$/i
 
 export function createSlug(string: string): string {
   return string
@@ -39,4 +40,8 @@ export function createSlug(string: string): string {
     .replace(/--+/g, "-")
     .replace(TRIM_HYPHENS_START_REGEX, "")
     .replace(TRIM_HYPHENS_END_REGEX, "")
+}
+
+export function convertToWebp(filename: string): string {
+  return filename.replace(IMAGE_EXTENSION_REGEX, ".webp")
 }

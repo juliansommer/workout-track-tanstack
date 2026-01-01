@@ -6,7 +6,7 @@ export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
       {
-        title: "Login",
+        title: "Login | Workout Track",
       },
     ],
   }),

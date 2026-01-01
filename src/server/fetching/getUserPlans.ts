@@ -2,9 +2,7 @@ import { createServerFn } from "@tanstack/react-start"
 
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 
-export const getUserPlans = createServerFn({
-  method: "GET",
-}).handler(async () => {
+export const getUserPlans = createServerFn().handler(async () => {
   const supabase = createSupabaseServerClient()
 
   // get the user and check auth

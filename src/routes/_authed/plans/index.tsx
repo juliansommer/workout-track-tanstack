@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_authed/plans/")({
   head: () => ({
     meta: [
       {
-        title: "Plans",
+        title: "Plans | Workout Track",
       },
     ],
   }),

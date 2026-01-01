@@ -21,7 +21,7 @@ export const Route = createFileRoute("/exercises/$exercise")({
   head: ({ loaderData }) => ({
     meta: [
       {
-        title: `${loaderData?.name ?? ""} Exercise`,
+        title: `${loaderData?.name ?? ""} Exercise | Workout Track`,
       },
     ],
   }),

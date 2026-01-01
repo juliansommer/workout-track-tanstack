@@ -24,7 +24,7 @@ export const Route = createFileRoute("/exercises/p/$page")({
   head: ({ params }) => ({
     meta: [
       {
-        title: `Exercises Page ${params.page}`,
+        title: `Exercises Page ${params.page} | Workout Track`,
       },
     ],
   }),

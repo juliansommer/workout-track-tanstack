@@ -6,3 +6,4 @@
 - move data fetching into react query?
 - move data fetching from server functions to clientside supabase queries and then store in react query?
 - add suspense boundaries back in? - remove done from /plans but could add again
+- add progressbar back. was getting some error I think but would be nice to have for after they submit
