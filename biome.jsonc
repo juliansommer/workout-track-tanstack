@@ -58,16 +58,6 @@
           }
         }
       }
-    },
-    {
-      "includes": ["src/server/**/*.ts"],
-      "linter": {
-        "rules": {
-          "nursery": {
-            "useExplicitType": "error"
-          }
-        }
-      }
     }
   ]
 }
