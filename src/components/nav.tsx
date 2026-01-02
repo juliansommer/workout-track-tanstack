@@ -92,7 +92,7 @@ export default function Nav() {
       <div className="relative flex gap-3 md:hidden">
         {user ? (
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger>
               <button
                 className={buttonVariants({ variant: "default" })}
                 type="button"
