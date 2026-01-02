@@ -1,12 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 
-import { Heading } from "@/components/heading"
+import { Heading, HeadingSkeleton } from "@/components/heading"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cleanTimestamp, convertToWebp } from "@/lib/utils"
 import { specificWorkoutQueryOptions } from "@/queries/workouts"
+import WorkoutFormSkeleton from "./-components/workout-form-skeleton"
 
 export const Route = createFileRoute("/_authed/workouts/$workout")({
   loader: ({ params, context }) =>
@@ -21,6 +22,7 @@ export const Route = createFileRoute("/_authed/workouts/$workout")({
     ],
   }),
   component: Workout,
+  pendingComponent: PendingWorkout,
 })
 
 function Workout() {
@@ -97,6 +99,15 @@ function Workout() {
           </div>
         </div>
       </div>
+    </>
+  )
+}
+
+function PendingWorkout() {
+  return (
+    <>
+      <HeadingSkeleton />
+      <WorkoutFormSkeleton />
     </>
   )
 }

@@ -1,10 +1,12 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 
-import { Heading } from "@/components/heading"
+import { Heading, HeadingSkeleton } from "@/components/heading"
+import { Skeleton } from "@/components/ui/skeleton"
 import { specificPlanQueryOptions } from "@/queries/plans"
 import { workoutTargetsQueryOptions } from "@/queries/workouts"
 import WorkoutForm from "../-components/workout-form"
+import WorkoutFormSkeleton from "../-components/workout-form-skeleton"
 
 export const Route = createFileRoute("/_authed/workouts/create/$id")({
   loader: async ({ params, context }) => {
@@ -24,6 +26,7 @@ export const Route = createFileRoute("/_authed/workouts/create/$id")({
     ],
   }),
   component: CreateWorkoutId,
+  pendingComponent: PendingCreateWorkoutId,
 })
 
 function CreateWorkoutId() {
@@ -35,6 +38,19 @@ function CreateWorkoutId() {
     <>
       <Heading title={`${data.name} Workout`} />
       <WorkoutForm workoutData={data} workoutTargets={targets} />
+    </>
+  )
+}
+
+function PendingCreateWorkoutId() {
+  return (
+    <>
+      <HeadingSkeleton />
+      <WorkoutFormSkeleton>
+        <div className="pt-5">
+          <Skeleton className="h-10 w-20" />
+        </div>
+      </WorkoutFormSkeleton>
     </>
   )
 }
