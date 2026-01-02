@@ -25,8 +25,6 @@ export default function WorkoutForm({
   workoutTargets,
 }: WorkoutFormProps) {
   const router = useRouter()
-  const workout = workoutData
-  const targets = workoutTargets
 
   const {
     register,
@@ -43,7 +41,9 @@ export default function WorkoutForm({
     data: WorkoutFormData,
   ) => {
     try {
-      await createWorkout({ data: { id: workout.id, sets: data.exercises } })
+      await createWorkout({
+        data: { id: workoutData.id, sets: data.exercises },
+      })
       router.navigate({ to: "/workouts" })
     } catch (error) {
       throw new Error("Failed to create workout", { cause: error })
@@ -55,13 +55,13 @@ export default function WorkoutForm({
       <div className="flex flex-col space-y-6">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-6">
-            {workout.exercises.map((exercise) => (
+            {workoutData.exercises.map((exercise) => (
               <Card className="overflow-hidden" key={exercise.id}>
                 <div className="grid gap-4 md:grid-cols-[300px_1fr]">
                   <div className="relative h-[200px] md:h-full">
                     <img
                       alt={exercise.name}
-                      className="object-cover"
+                      className="h-full w-full object-cover"
                       height={200}
                       loading="eager"
                       src={`/images/${convertToWebp(exercise.image)}`}
@@ -94,8 +94,8 @@ export default function WorkoutForm({
                                 <Input
                                   id={`${exercise.id}-set-${setIndex}-weight`}
                                   placeholder={String(
-                                    targets[exercise.id]?.[setIndex]?.weight ??
-                                      "0",
+                                    workoutTargets[exercise.id]?.[setIndex]
+                                      ?.weight ?? "0",
                                   )}
                                   type="number"
                                   {...register(
@@ -127,8 +127,8 @@ export default function WorkoutForm({
                                 <Input
                                   id={`${exercise.id}-set-${setIndex}-reps`}
                                   placeholder={String(
-                                    targets[exercise.id]?.[setIndex]?.reps ??
-                                      "0",
+                                    workoutTargets[exercise.id]?.[setIndex]
+                                      ?.reps ?? "0",
                                   )}
                                   type="number"
                                   {...register(
