@@ -4,6 +4,7 @@ import { Dumbbell, Edit } from "lucide-react"
 
 import { buttonVariants } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 import { convertToWebp, createSlug } from "@/lib/utils"
 import { specificPlanQueryOptions } from "@/queries/plans"
 import DeletePlan from "../-components/delete-plan"
@@ -19,6 +20,7 @@ export const Route = createFileRoute("/_authed/plans/$plan/")({
     ],
   }),
   component: PlanDetails,
+  pendingComponent: PendingPlanDetails,
 })
 
 function PlanDetails() {
@@ -89,6 +91,15 @@ function PlanDetails() {
           </div>
         </CardContent>
       </Card>
+    </div>
+  )
+}
+
+function PendingPlanDetails() {
+  return (
+    <div className="container mx-auto max-w-4xl p-4">
+      {/* Height is guaranteed to be at least 132 pixels as thats the height on desktop with 1 exercise */}
+      <Skeleton className="h-132 rounded-lg" />
     </div>
   )
 }
