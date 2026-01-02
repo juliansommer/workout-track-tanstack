@@ -113,11 +113,11 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full space-y-2 pt-5">
           <Input placeholder="Name" type="text" {...register("name")} />
-          {!!errors.name && <p>{errors.name.message}</p>}
+          {errors.name && <p>{errors.name.message}</p>}
         </div>
         <div className="pt-5">
           <Textarea placeholder="Notes" {...register("notes")} />
-          {!!errors.notes && <p>{errors.notes.message}</p>}
+          {errors.notes && <p>{errors.notes.message}</p>}
         </div>
         <div className="space-y-5 pt-5">
           <Button onClick={addComponent} type="button">
@@ -152,19 +152,19 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
                         <span className="sr-only">Delete Exercise</span>
                       </Button>
                     </div>
-                    {!!errors.exercises?.[index] && (
+                    {errors.exercises?.[index] && (
                       <div className="pt-2">
                         {typeof errors.exercises[index] === "object" &&
                           "message" in errors.exercises[index] && (
                             <p>{errors.exercises[index].message}</p>
                           )}
-                        {!!errors.exercises[index].label && (
+                        {errors.exercises[index].label && (
                           <p>{errors.exercises[index].label.message}</p>
                         )}
-                        {!!errors.exercises[index].value && (
+                        {errors.exercises[index].value && (
                           <p>{errors.exercises[index].value.message}</p>
                         )}
-                        {!!errors.exercises[index].sets && (
+                        {errors.exercises[index].sets && (
                           <p>{errors.exercises[index].sets.message}</p>
                         )}
                       </div>
@@ -179,7 +179,7 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
         {components.length >= 10 && (
           <p className="pt-5">You can only add up to 10 exercises</p>
         )}
-        {!!errors.exercises && <p>{errors.exercises.message}</p>}
+        {errors.exercises && <p>{errors.exercises.message}</p>}
         <div className="pt-5">
           <Button type="submit">Submit</Button>
         </div>

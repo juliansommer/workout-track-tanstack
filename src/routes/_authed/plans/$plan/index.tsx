@@ -50,7 +50,7 @@ function PlanDetails() {
           </div>
         </CardHeader>
         <CardContent>
-          {!!data.notes && (
+          {data.notes && (
             <div className="mb-6">
               <h2 className="mb-2 font-semibold text-xl">Notes</h2>
               <p className="text-neutral-700 dark:text-neutral-300">
@@ -71,7 +71,7 @@ function PlanDetails() {
                       alt={exercise.name}
                       className="h-full w-full"
                       height={300}
-                      loading="eager"
+                      loading="lazy"
                       src={`/images/${convertToWebp(exercise.image)}`}
                       width={500}
                     />

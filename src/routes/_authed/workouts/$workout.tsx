@@ -43,7 +43,7 @@ function Workout() {
                       alt={exercise.exercise.name}
                       className="h-full w-full object-cover"
                       height={200}
-                      loading="eager"
+                      loading="lazy"
                       src={`/images/${convertToWebp(exercise.exercise.image)}`}
                       width={300}
                     />

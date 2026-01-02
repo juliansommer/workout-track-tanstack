@@ -66,7 +66,7 @@ export default function WorkoutForm({
                       alt={exercise.name}
                       className="h-full w-full object-cover"
                       height={200}
-                      loading="eager"
+                      loading="lazy"
                       src={`/images/${convertToWebp(exercise.image)}`}
                       width={300}
                     />
@@ -107,8 +107,7 @@ export default function WorkoutForm({
                                   )}
                                 />
                                 <div className="h-5">
-                                  {" "}
-                                  {!!errors.exercises?.[exercise.id]?.[setIndex]
+                                  {errors.exercises?.[exercise.id]?.[setIndex]
                                     ?.weight && (
                                     <p className="text-sm">
                                       {
@@ -140,8 +139,7 @@ export default function WorkoutForm({
                                   )}
                                 />
                                 <div className="h-5">
-                                  {" "}
-                                  {!!errors.exercises?.[exercise.id]?.[setIndex]
+                                  {errors.exercises?.[exercise.id]?.[setIndex]
                                     ?.reps && (
                                     <p className="text-sm">
                                       {
