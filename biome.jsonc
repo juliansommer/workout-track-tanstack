@@ -23,16 +23,7 @@
   },
   "linter": {
     "rules": {
-      "style": {
-        "useConsistentTypeDefinitions": {
-          "level": "error",
-          "options": {
-            "style": "interface"
-          }
-        }
-      },
       "suspicious": {
-        // tailwind css
         "noUnknownAtRules": "off"
       }
     }
