@@ -1,12 +1,12 @@
-import {
-  Root as Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@radix-ui/react-collapsible"
 import { createFileRoute } from "@tanstack/react-router"
 import { ChevronRightIcon } from "lucide-react"
 
 import { Heading } from "@/components/heading"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import exercises from "@/lib/exercises.json"
 import { createSlug, titleCase } from "@/lib/utils"
 
