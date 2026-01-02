@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "@tanstack/react-router"
 import { Trash2 } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -44,6 +45,7 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
   const [components, setComponents] = useState<number[]>([])
 
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   // Initialize form with plan data
   useEffect(() => {
@@ -87,16 +89,16 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
     if (planData) {
       try {
         await editPlan({ data: { planId: planData.id, formData } })
+        queryClient.invalidateQueries({ queryKey: ["plans"] })
         router.navigate({ to: "/plans" })
-        router.invalidate()
       } catch (error) {
         throw new Error("Failed to edit plan", { cause: error })
       }
     } else {
       try {
         await createPlan({ data: formData })
+        queryClient.invalidateQueries({ queryKey: ["plans"] })
         router.navigate({ to: "/plans" })
-        router.invalidate()
       } catch (error) {
         throw new Error("Failed to create plan", { cause: error })
       }

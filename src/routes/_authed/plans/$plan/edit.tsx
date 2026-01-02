@@ -1,22 +1,25 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 
 import { Heading } from "@/components/heading"
-import { getAllExerciseNames } from "@/server/fetching/getAllExerciseNames"
-import { getSpecificPlan } from "@/server/fetching/getSpecificPlan"
+import { getAllExerciseNamesQueryOptions } from "@/queries/exercises"
+import { specificPlanQueryOptions } from "@/queries/plans"
 import PlanForm from "../-components/plan-form"
 
 export const Route = createFileRoute("/_authed/plans/$plan/edit")({
-  loader: async ({ params }) => {
-    const [exerciseData, planData] = await Promise.all([
-      getAllExerciseNames(),
-      getSpecificPlan({ data: { planId: params.plan } }),
+  loader: async ({ params, context }) => {
+    const [planData, _] = await Promise.all([
+      context.queryClient.ensureQueryData(
+        specificPlanQueryOptions(params.plan),
+      ),
+      context.queryClient.ensureQueryData(getAllExerciseNamesQueryOptions()),
     ])
-    return { exerciseData, planData }
+    return planData.name
   },
   head: ({ loaderData }) => ({
     meta: [
       {
-        title: `Edit Plan ${loaderData?.planData?.name ?? ""} | Workout Track`,
+        title: `Edit Plan ${loaderData ?? ""} | Workout Track`,
       },
     ],
   }),
@@ -24,7 +27,11 @@ export const Route = createFileRoute("/_authed/plans/$plan/edit")({
 })
 
 function EditPlan() {
-  const { exerciseData, planData } = Route.useLoaderData()
+  const { plan } = Route.useParams()
+  const { data: exerciseData } = useSuspenseQuery(
+    getAllExerciseNamesQueryOptions(),
+  )
+  const { data: planData } = useSuspenseQuery(specificPlanQueryOptions(plan))
 
   const newPlanData = {
     id: planData.id,

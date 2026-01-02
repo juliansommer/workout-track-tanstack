@@ -1,11 +1,13 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
 
 import { Heading } from "@/components/heading"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getUserPlans } from "@/server/fetching/getUserPlans"
+import { userPlansQueryOptions } from "@/queries/plans"
 
 export const Route = createFileRoute("/_authed/workouts/create/")({
-  loader: () => getUserPlans(),
+  loader: ({ context }) =>
+    context.queryClient.ensureQueryData(userPlansQueryOptions()),
   head: () => ({
     meta: [
       {
@@ -17,7 +19,7 @@ export const Route = createFileRoute("/_authed/workouts/create/")({
 })
 
 function CreateWorkout() {
-  const data = Route.useLoaderData()
+  const { data } = useSuspenseQuery(userPlansQueryOptions())
 
   return (
     <>

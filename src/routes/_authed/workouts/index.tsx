@@ -1,13 +1,15 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
 
 import { Heading } from "@/components/heading"
 import { buttonVariants } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cleanTimestamp, cn } from "@/lib/utils"
-import { getUserWorkouts } from "@/server/fetching/getUserWorkouts"
+import { userWorkoutsQueryOptions } from "@/queries/workouts"
 
 export const Route = createFileRoute("/_authed/workouts/")({
-  loader: () => getUserWorkouts(),
+  loader: ({ context }) =>
+    context.queryClient.ensureQueryData(userWorkoutsQueryOptions()),
   head: () => ({
     meta: [
       {
@@ -19,7 +21,7 @@ export const Route = createFileRoute("/_authed/workouts/")({
 })
 
 function Workouts() {
-  const data = Route.useLoaderData()
+  const { data } = useSuspenseQuery(userWorkoutsQueryOptions())
 
   return (
     <>

@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "@tanstack/react-router"
 import { Trash2 } from "lucide-react"
 
@@ -6,11 +7,12 @@ import { deletePlan } from "@/server/actions/deletePlan"
 
 export default function DeletePlan({ planId }: { planId: string }) {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   async function handleDelete() {
     await deletePlan({ data: { planId } })
+    queryClient.invalidateQueries({ queryKey: ["plans-user"] })
     router.navigate({ to: "/plans" })
-    router.invalidate()
   }
 
   return (

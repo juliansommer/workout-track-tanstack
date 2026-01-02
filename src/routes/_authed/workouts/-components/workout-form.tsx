@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "@tanstack/react-router"
 import { type SubmitHandler, useForm } from "react-hook-form"
 
@@ -25,6 +26,7 @@ export default function WorkoutForm({
   workoutTargets,
 }: WorkoutFormProps) {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const {
     register,
@@ -44,8 +46,8 @@ export default function WorkoutForm({
       await createWorkout({
         data: { id: workoutData.id, sets: data.exercises },
       })
+      queryClient.invalidateQueries({ queryKey: ["workouts-user"] })
       router.navigate({ to: "/workouts" })
-      router.invalidate()
     } catch (error) {
       throw new Error("Failed to create workout", { cause: error })
     }

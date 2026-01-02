@@ -1,11 +1,13 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 
 import { Heading } from "@/components/heading"
-import { getAllExerciseNames } from "@/server/fetching/getAllExerciseNames"
+import { getAllExerciseNamesQueryOptions } from "@/queries/exercises"
 import PlanForm from "./-components/plan-form"
 
 export const Route = createFileRoute("/_authed/plans/create")({
-  loader: () => getAllExerciseNames(),
+  loader: ({ context }) =>
+    context.queryClient.ensureQueryData(getAllExerciseNamesQueryOptions()),
   head: () => ({
     meta: [
       {
@@ -17,7 +19,8 @@ export const Route = createFileRoute("/_authed/plans/create")({
 })
 
 function CreatePlan() {
-  const data = Route.useLoaderData()
+  const { data } = useSuspenseQuery(getAllExerciseNamesQueryOptions())
+
   return (
     <>
       <Heading title="Create Plan" />

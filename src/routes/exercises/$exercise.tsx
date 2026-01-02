@@ -26,6 +26,7 @@ export const Route = createFileRoute("/exercises/$exercise")({
     ],
   }),
   component: ExercisePage,
+  preloadStaleTime: 1000 * 60 * 60 * 24, // 24 hours
 })
 
 function ExercisePage() {

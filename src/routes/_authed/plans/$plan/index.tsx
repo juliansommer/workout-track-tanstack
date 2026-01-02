@@ -1,14 +1,16 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { Dumbbell, Edit } from "lucide-react"
 
 import { buttonVariants } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { convertToWebp, createSlug } from "@/lib/utils"
-import { getSpecificPlan } from "@/server/fetching/getSpecificPlan"
+import { specificPlanQueryOptions } from "@/queries/plans"
 import DeletePlan from "../-components/delete-plan"
 
 export const Route = createFileRoute("/_authed/plans/$plan/")({
-  loader: ({ params }) => getSpecificPlan({ data: { planId: params.plan } }),
+  loader: ({ params, context }) =>
+    context.queryClient.ensureQueryData(specificPlanQueryOptions(params.plan)),
   head: ({ loaderData }) => ({
     meta: [
       {
@@ -20,7 +22,8 @@ export const Route = createFileRoute("/_authed/plans/$plan/")({
 })
 
 function PlanDetails() {
-  const data = Route.useLoaderData()
+  const { plan } = Route.useParams()
+  const { data } = useSuspenseQuery(specificPlanQueryOptions(plan))
 
   return (
     <div className="container mx-auto max-w-4xl p-4">

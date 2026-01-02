@@ -1,22 +1,25 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 
 import { Heading } from "@/components/heading"
-import { getSpecificPlan } from "@/server/fetching/getSpecificPlan"
-import { getWorkoutTargets } from "@/server/fetching/getWorkoutTargets"
+import { specificPlanQueryOptions } from "@/queries/plans"
+import { workoutTargetsQueryOptions } from "@/queries/workouts"
 import WorkoutForm from "../-components/workout-form"
 
 export const Route = createFileRoute("/_authed/workouts/create/$id")({
-  loader: async ({ params }) => {
-    const [data, targets] = await Promise.all([
-      getSpecificPlan({ data: { planId: params.id } }),
-      getWorkoutTargets({ data: { planId: params.id } }),
+  loader: async ({ params, context }) => {
+    const [planData, _] = await Promise.all([
+      context.queryClient.ensureQueryData(specificPlanQueryOptions(params.id)),
+      context.queryClient.ensureQueryData(
+        workoutTargetsQueryOptions(params.id),
+      ),
     ])
-    return { data, targets }
+    return planData.name
   },
   head: ({ loaderData }) => ({
     meta: [
       {
-        title: `Create Workout of Plan ${loaderData?.data?.name ?? ""} | Workout Track`,
+        title: `Create Workout of Plan ${loaderData ?? ""} | Workout Track`,
       },
     ],
   }),
@@ -24,7 +27,9 @@ export const Route = createFileRoute("/_authed/workouts/create/$id")({
 })
 
 function CreateWorkoutId() {
-  const { data, targets } = Route.useLoaderData()
+  const { id } = Route.useParams()
+  const { data } = useSuspenseQuery(specificPlanQueryOptions(id))
+  const { data: targets } = useSuspenseQuery(workoutTargetsQueryOptions(id))
 
   return (
     <>
