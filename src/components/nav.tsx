@@ -40,6 +40,7 @@ export default function Nav() {
     const supabase = createSupabaseBrowserClient()
     await supabase.auth.signOut()
     router.navigate({ to: "/" })
+    router.invalidate()
   }
 
   return (

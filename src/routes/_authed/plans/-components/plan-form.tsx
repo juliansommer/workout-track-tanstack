@@ -88,6 +88,7 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
       try {
         await editPlan({ data: { planId: planData.id, formData } })
         router.navigate({ to: "/plans" })
+        router.invalidate()
       } catch (error) {
         throw new Error("Failed to edit plan", { cause: error })
       }
@@ -95,6 +96,7 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
       try {
         await createPlan({ data: formData })
         router.navigate({ to: "/plans" })
+        router.invalidate()
       } catch (error) {
         throw new Error("Failed to create plan", { cause: error })
       }

@@ -10,6 +10,7 @@ export default function DeletePlan({ planId }: { planId: string }) {
   async function handleDelete() {
     await deletePlan({ data: { planId } })
     router.navigate({ to: "/plans" })
+    router.invalidate()
   }
 
   return (

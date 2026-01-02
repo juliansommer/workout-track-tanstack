@@ -45,6 +45,7 @@ export default function WorkoutForm({
         data: { id: workoutData.id, sets: data.exercises },
       })
       router.navigate({ to: "/workouts" })
+      router.invalidate()
     } catch (error) {
       throw new Error("Failed to create workout", { cause: error })
     }
