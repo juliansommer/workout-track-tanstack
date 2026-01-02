@@ -1,8 +1,8 @@
 import { queryOptions } from "@tanstack/react-query"
 
-import { getSpecificWorkout } from "@/server/fetching/getSpecificWorkout"
-import { getUserWorkouts } from "@/server/fetching/getUserWorkouts"
-import { getWorkoutTargets } from "@/server/fetching/getWorkoutTargets"
+import { getSpecificWorkout } from "@/fetching/getSpecificWorkout"
+import { getUserWorkouts } from "@/fetching/getUserWorkouts"
+import { getWorkoutTargets } from "@/fetching/getWorkoutTargets"
 
 export const userWorkoutsQueryOptions = () =>
   queryOptions({
@@ -14,13 +14,13 @@ export const userWorkoutsQueryOptions = () =>
 export const specificWorkoutQueryOptions = (workoutId: string) =>
   queryOptions({
     queryKey: ["workouts-specific", workoutId],
-    queryFn: () => getSpecificWorkout({ data: { workoutId } }),
+    queryFn: () => getSpecificWorkout(workoutId),
     staleTime: 60 * 5 * 1000, // 5 minutes
   })
 
 export const workoutTargetsQueryOptions = (planId: string) =>
   queryOptions({
     queryKey: ["workout-targets", planId],
-    queryFn: () => getWorkoutTargets({ data: { planId } }),
+    queryFn: () => getWorkoutTargets(planId),
     staleTime: 60 * 5 * 1000, // 5 minutes
   })

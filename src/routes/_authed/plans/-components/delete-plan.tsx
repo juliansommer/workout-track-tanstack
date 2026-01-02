@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router"
 import { Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { deletePlan } from "@/server/actions/deletePlan"
+import { deletePlan } from "@/server/deletePlan"
 
 export default function DeletePlan({ planId }: { planId: string }) {
   const router = useRouter()

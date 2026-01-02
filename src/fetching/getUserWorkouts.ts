@@ -1,11 +1,8 @@
-import { createServerFn } from "@tanstack/react-start"
+import { getSupabaseClient } from "@/lib/supabase/isomorphic"
 
-import { createSupabaseServerClient } from "@/lib/supabase/server"
+export async function getUserWorkouts() {
+  const supabase = getSupabaseClient()
 
-export const getUserWorkouts = createServerFn().handler(async () => {
-  const supabase = await createSupabaseServerClient()
-
-  // get the user and check auth
   const claims = await supabase.auth.getClaims()
   const user = claims.data?.claims.sub
 
@@ -38,4 +35,4 @@ export const getUserWorkouts = createServerFn().handler(async () => {
   }
 
   return data
-})
+}

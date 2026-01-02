@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { convertToWebp } from "@/lib/utils"
-import { createWorkout } from "@/server/actions/createWorkout"
+import { createWorkout } from "@/server/createWorkout"
 import type { PlanData } from "@/types"
 import {
   type WorkoutFormData,

@@ -1,10 +1,10 @@
 import { queryOptions } from "@tanstack/react-query"
 
-import { getAllExerciseNames } from "@/server/fetching/getAllExerciseNames"
+import { getAllExercises } from "@/fetching/getAllExercises"
 
 export const getAllExerciseNamesQueryOptions = () =>
   queryOptions({
     queryKey: ["exercises-all"],
-    queryFn: () => getAllExerciseNames(),
+    queryFn: () => getAllExercises(),
     staleTime: 60 * 5 * 1000, // 5 minutes
   })
