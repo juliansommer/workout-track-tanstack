@@ -89,7 +89,10 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
     if (planData) {
       try {
         await editPlan({ data: { planId: planData.id, formData } })
-        queryClient.invalidateQueries({ queryKey: ["plans"] })
+        queryClient.invalidateQueries({ queryKey: ["plans-user"] })
+        queryClient.invalidateQueries({
+          queryKey: ["plans-specific", planData.id],
+        })
         router.navigate({ to: "/plans" })
       } catch (error) {
         throw new Error("Failed to edit plan", { cause: error })
@@ -97,7 +100,7 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
     } else {
       try {
         await createPlan({ data: formData })
-        queryClient.invalidateQueries({ queryKey: ["plans"] })
+        queryClient.invalidateQueries({ queryKey: ["plans-user"] })
         router.navigate({ to: "/plans" })
       } catch (error) {
         throw new Error("Failed to create plan", { cause: error })
