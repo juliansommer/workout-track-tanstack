@@ -4,3 +4,5 @@
 
 ## TODO
 - fix server actions to improve sql
+- refactor to reduce code reuse, specifically about suspense boundaries - break headers into component
+- skeleton for workouts/$workoutid, workouts/create/$id

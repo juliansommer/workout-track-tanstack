@@ -14,7 +14,6 @@ export function getRouter() {
     context: { queryClient },
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
-    defaultPendingMs: 0,
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,
   })
