@@ -106,16 +106,16 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/exercises/$exercise': typeof ExercisesExerciseRoute
-  '/exercises': typeof ExercisesIndexRoute
+  '/exercises/': typeof ExercisesIndexRoute
   '/plans/create': typeof AuthedPlansCreateRoute
   '/workouts/$workout': typeof AuthedWorkoutsWorkoutRoute
   '/exercises/p/$page': typeof ExercisesPPageRoute
-  '/plans': typeof AuthedPlansIndexRoute
-  '/workouts': typeof AuthedWorkoutsIndexRoute
+  '/plans/': typeof AuthedPlansIndexRoute
+  '/workouts/': typeof AuthedWorkoutsIndexRoute
   '/plans/$plan/edit': typeof AuthedPlansPlanEditRoute
   '/workouts/create/$id': typeof AuthedWorkoutsCreateIdRoute
-  '/plans/$plan': typeof AuthedPlansPlanIndexRoute
-  '/workouts/create': typeof AuthedWorkoutsCreateIndexRoute
+  '/plans/$plan/': typeof AuthedPlansPlanIndexRoute
+  '/workouts/create/': typeof AuthedWorkoutsCreateIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -158,16 +158,16 @@ export interface FileRouteTypes {
     | '/login'
     | '/auth/callback'
     | '/exercises/$exercise'
-    | '/exercises'
+    | '/exercises/'
     | '/plans/create'
     | '/workouts/$workout'
     | '/exercises/p/$page'
-    | '/plans'
-    | '/workouts'
+    | '/plans/'
+    | '/workouts/'
     | '/plans/$plan/edit'
     | '/workouts/create/$id'
-    | '/plans/$plan'
-    | '/workouts/create'
+    | '/plans/$plan/'
+    | '/workouts/create/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -225,7 +225,7 @@ declare module '@tanstack/react-router' {
     '/_authed': {
       id: '/_authed'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthedRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -239,7 +239,7 @@ declare module '@tanstack/react-router' {
     '/exercises/': {
       id: '/exercises/'
       path: '/exercises'
-      fullPath: '/exercises'
+      fullPath: '/exercises/'
       preLoaderRoute: typeof ExercisesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -260,14 +260,14 @@ declare module '@tanstack/react-router' {
     '/_authed/workouts/': {
       id: '/_authed/workouts/'
       path: '/workouts'
-      fullPath: '/workouts'
+      fullPath: '/workouts/'
       preLoaderRoute: typeof AuthedWorkoutsIndexRouteImport
       parentRoute: typeof AuthedRoute
     }
     '/_authed/plans/': {
       id: '/_authed/plans/'
       path: '/plans'
-      fullPath: '/plans'
+      fullPath: '/plans/'
       preLoaderRoute: typeof AuthedPlansIndexRouteImport
       parentRoute: typeof AuthedRoute
     }
@@ -295,14 +295,14 @@ declare module '@tanstack/react-router' {
     '/_authed/workouts/create/': {
       id: '/_authed/workouts/create/'
       path: '/workouts/create'
-      fullPath: '/workouts/create'
+      fullPath: '/workouts/create/'
       preLoaderRoute: typeof AuthedWorkoutsCreateIndexRouteImport
       parentRoute: typeof AuthedRoute
     }
     '/_authed/plans/$plan/': {
       id: '/_authed/plans/$plan/'
       path: '/plans/$plan'
-      fullPath: '/plans/$plan'
+      fullPath: '/plans/$plan/'
       preLoaderRoute: typeof AuthedPlansPlanIndexRouteImport
       parentRoute: typeof AuthedRoute
     }
