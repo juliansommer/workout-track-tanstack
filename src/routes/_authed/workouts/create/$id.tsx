@@ -11,10 +11,14 @@ import WorkoutFormSkeleton from "../-components/workout-form-skeleton"
 export const Route = createFileRoute("/_authed/workouts/create/$id")({
   loader: async ({ params, context }) => {
     const [planData, _] = await Promise.all([
-      context.queryClient.ensureQueryData(specificPlanQueryOptions(params.id)),
-      context.queryClient.ensureQueryData(
-        workoutTargetsQueryOptions(params.id),
-      ),
+      context.queryClient.query({
+        ...specificPlanQueryOptions(params.id),
+        staleTime: "static",
+      }),
+      context.queryClient.query({
+        ...workoutTargetsQueryOptions(params.id),
+        staleTime: "static",
+      }),
     ])
     return planData.name
   },

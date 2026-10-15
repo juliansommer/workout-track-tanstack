@@ -10,7 +10,10 @@ import { userWorkoutsQueryOptions } from "@/queries/workouts"
 
 export const Route = createFileRoute("/_authed/workouts/")({
   loader: ({ context }) =>
-    context.queryClient.ensureQueryData(userWorkoutsQueryOptions()),
+    context.queryClient.query({
+      ...userWorkoutsQueryOptions(),
+      staleTime: "static",
+    }),
   head: () => ({
     meta: [
       {

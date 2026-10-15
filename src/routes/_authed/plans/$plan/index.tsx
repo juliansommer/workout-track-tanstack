@@ -11,7 +11,10 @@ import DeletePlan from "../-components/delete-plan"
 
 export const Route = createFileRoute("/_authed/plans/$plan/")({
   loader: ({ params, context }) =>
-    context.queryClient.ensureQueryData(specificPlanQueryOptions(params.plan)),
+    context.queryClient.query({
+      ...specificPlanQueryOptions(params.plan),
+      staleTime: "static",
+    }),
   head: ({ loaderData }) => ({
     meta: [
       {

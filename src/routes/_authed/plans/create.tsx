@@ -9,7 +9,10 @@ import PlanFormSkeleton from "./-components/plan-form-skeleton"
 
 export const Route = createFileRoute("/_authed/plans/create")({
   loader: ({ context }) =>
-    context.queryClient.ensureQueryData(getAllExerciseNamesQueryOptions()),
+    context.queryClient.query({
+      ...getAllExerciseNamesQueryOptions(),
+      staleTime: "static",
+    }),
   head: () => ({
     meta: [
       {

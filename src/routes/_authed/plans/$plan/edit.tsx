@@ -11,10 +11,14 @@ import PlanFormSkeleton from "../-components/plan-form-skeleton"
 export const Route = createFileRoute("/_authed/plans/$plan/edit")({
   loader: async ({ params, context }) => {
     const [planData, _] = await Promise.all([
-      context.queryClient.ensureQueryData(
-        specificPlanQueryOptions(params.plan),
-      ),
-      context.queryClient.ensureQueryData(getAllExerciseNamesQueryOptions()),
+      context.queryClient.query({
+        ...specificPlanQueryOptions(params.plan),
+        staleTime: "static",
+      }),
+      context.queryClient.query({
+        ...getAllExerciseNamesQueryOptions(),
+        staleTime: "static",
+      }),
     ])
     return planData.name
   },

@@ -11,9 +11,10 @@ import WorkoutFormSkeleton from "./-components/workout-form-skeleton"
 
 export const Route = createFileRoute("/_authed/workouts/$workout")({
   loader: ({ params, context }) =>
-    context.queryClient.ensureQueryData(
-      specificWorkoutQueryOptions(params.workout),
-    ),
+    context.queryClient.query({
+      ...specificWorkoutQueryOptions(params.workout),
+      staleTime: "static",
+    }),
   head: ({ loaderData }) => ({
     meta: [
       {

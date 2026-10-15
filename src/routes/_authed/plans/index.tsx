@@ -10,7 +10,10 @@ import { userPlansQueryOptions } from "@/queries/plans"
 
 export const Route = createFileRoute("/_authed/plans/")({
   loader: ({ context }) =>
-    context.queryClient.ensureQueryData(userPlansQueryOptions()),
+    context.queryClient.query({
+      ...userPlansQueryOptions(),
+      staleTime: "static",
+    }),
   head: () => ({
     meta: [
       {
