@@ -22,7 +22,7 @@ export const Route = createFileRoute("/auth/callback")({
             } else if (forwardedHost) {
               redirectUrl = `https://${forwardedHost}`
             } else {
-              redirectUrl = `${url.origin}}`
+              redirectUrl = url.origin
             }
             // Create a Response with mutable headers so TanStack Start can merge cookies
             return new Response(null, {
@@ -33,6 +33,11 @@ export const Route = createFileRoute("/auth/callback")({
             })
           }
         }
+
+        return new Response(null, {
+          status: 302,
+          headers: { Location: "/login" },
+        })
       },
     },
   },
