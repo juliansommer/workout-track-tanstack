@@ -9,34 +9,39 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthedRouteImport } from './routes/_authed'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as ExercisesIndexRouteImport } from './routes/exercises/index'
 import { Route as ExercisesExerciseRouteImport } from './routes/exercises/$exercise'
-import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
-import { Route as AuthedWorkoutsIndexRouteImport } from './routes/_authed/workouts/index'
 import { Route as AuthedPlansIndexRouteImport } from './routes/_authed/plans/index'
-import { Route as ExercisesPPageRouteImport } from './routes/exercises/p.$page'
-import { Route as AuthedWorkoutsWorkoutRouteImport } from './routes/_authed/workouts/$workout'
 import { Route as AuthedPlansCreateRouteImport } from './routes/_authed/plans/create'
-import { Route as AuthedWorkoutsCreateIndexRouteImport } from './routes/_authed/workouts/create/index'
+import { Route as AuthedWorkoutsIndexRouteImport } from './routes/_authed/workouts/index'
+import { Route as AuthedWorkoutsWorkoutRouteImport } from './routes/_authed/workouts/$workout'
+import { Route as ExercisesPPageRouteImport } from './routes/exercises/p.$page'
 import { Route as AuthedPlansPlanIndexRouteImport } from './routes/_authed/plans/$plan/index'
-import { Route as AuthedWorkoutsCreateIdRouteImport } from './routes/_authed/workouts/create/$id'
 import { Route as AuthedPlansPlanEditRouteImport } from './routes/_authed/plans/$plan/edit'
+import { Route as AuthedWorkoutsCreateIndexRouteImport } from './routes/_authed/workouts/create/index'
+import { Route as AuthedWorkoutsCreateIdRouteImport } from './routes/_authed/workouts/create/$id'
 
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedRoute = AuthedRouteImport.update({
   id: '/_authed',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExercisesIndexRoute = ExercisesIndexRouteImport.update({
@@ -49,19 +54,24 @@ const ExercisesExerciseRoute = ExercisesExerciseRouteImport.update({
   path: '/exercises/$exercise',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthCallbackRoute = AuthCallbackRouteImport.update({
-  id: '/auth/callback',
-  path: '/auth/callback',
-  getParentRoute: () => rootRouteImport,
+const AuthedPlansIndexRoute = AuthedPlansIndexRouteImport.update({
+  id: '/plans/',
+  path: '/plans/',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedPlansCreateRoute = AuthedPlansCreateRouteImport.update({
+  id: '/plans/create',
+  path: '/plans/create',
+  getParentRoute: () => AuthedRoute,
 } as any)
 const AuthedWorkoutsIndexRoute = AuthedWorkoutsIndexRouteImport.update({
   id: '/workouts/',
   path: '/workouts/',
   getParentRoute: () => AuthedRoute,
 } as any)
-const AuthedPlansIndexRoute = AuthedPlansIndexRouteImport.update({
-  id: '/plans/',
-  path: '/plans/',
+const AuthedWorkoutsWorkoutRoute = AuthedWorkoutsWorkoutRouteImport.update({
+  id: '/workouts/$workout',
+  path: '/workouts/$workout',
   getParentRoute: () => AuthedRoute,
 } as any)
 const ExercisesPPageRoute = ExercisesPPageRouteImport.update({
@@ -69,14 +79,14 @@ const ExercisesPPageRoute = ExercisesPPageRouteImport.update({
   path: '/exercises/p/$page',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthedWorkoutsWorkoutRoute = AuthedWorkoutsWorkoutRouteImport.update({
-  id: '/workouts/$workout',
-  path: '/workouts/$workout',
+const AuthedPlansPlanIndexRoute = AuthedPlansPlanIndexRouteImport.update({
+  id: '/plans/$plan/',
+  path: '/plans/$plan/',
   getParentRoute: () => AuthedRoute,
 } as any)
-const AuthedPlansCreateRoute = AuthedPlansCreateRouteImport.update({
-  id: '/plans/create',
-  path: '/plans/create',
+const AuthedPlansPlanEditRoute = AuthedPlansPlanEditRouteImport.update({
+  id: '/plans/$plan/edit',
+  path: '/plans/$plan/edit',
   getParentRoute: () => AuthedRoute,
 } as any)
 const AuthedWorkoutsCreateIndexRoute =
@@ -85,19 +95,9 @@ const AuthedWorkoutsCreateIndexRoute =
     path: '/workouts/create/',
     getParentRoute: () => AuthedRoute,
   } as any)
-const AuthedPlansPlanIndexRoute = AuthedPlansPlanIndexRouteImport.update({
-  id: '/plans/$plan/',
-  path: '/plans/$plan/',
-  getParentRoute: () => AuthedRoute,
-} as any)
 const AuthedWorkoutsCreateIdRoute = AuthedWorkoutsCreateIdRouteImport.update({
   id: '/workouts/create/$id',
   path: '/workouts/create/$id',
-  getParentRoute: () => AuthedRoute,
-} as any)
-const AuthedPlansPlanEditRoute = AuthedPlansPlanEditRouteImport.update({
-  id: '/plans/$plan/edit',
-  path: '/plans/$plan/edit',
   getParentRoute: () => AuthedRoute,
 } as any)
 
@@ -215,11 +215,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authed': {
@@ -229,11 +229,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/exercises/': {
@@ -250,39 +257,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExercisesExerciseRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/callback': {
-      id: '/auth/callback'
-      path: '/auth/callback'
-      fullPath: '/auth/callback'
-      preLoaderRoute: typeof AuthCallbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authed/workouts/': {
-      id: '/_authed/workouts/'
-      path: '/workouts'
-      fullPath: '/workouts/'
-      preLoaderRoute: typeof AuthedWorkoutsIndexRouteImport
-      parentRoute: typeof AuthedRoute
-    }
     '/_authed/plans/': {
       id: '/_authed/plans/'
       path: '/plans'
       fullPath: '/plans/'
       preLoaderRoute: typeof AuthedPlansIndexRouteImport
-      parentRoute: typeof AuthedRoute
-    }
-    '/exercises/p/$page': {
-      id: '/exercises/p/$page'
-      path: '/exercises/p/$page'
-      fullPath: '/exercises/p/$page'
-      preLoaderRoute: typeof ExercisesPPageRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authed/workouts/$workout': {
-      id: '/_authed/workouts/$workout'
-      path: '/workouts/$workout'
-      fullPath: '/workouts/$workout'
-      preLoaderRoute: typeof AuthedWorkoutsWorkoutRouteImport
       parentRoute: typeof AuthedRoute
     }
     '/_authed/plans/create': {
@@ -292,12 +271,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedPlansCreateRouteImport
       parentRoute: typeof AuthedRoute
     }
-    '/_authed/workouts/create/': {
-      id: '/_authed/workouts/create/'
-      path: '/workouts/create'
-      fullPath: '/workouts/create/'
-      preLoaderRoute: typeof AuthedWorkoutsCreateIndexRouteImport
+    '/_authed/workouts/': {
+      id: '/_authed/workouts/'
+      path: '/workouts'
+      fullPath: '/workouts/'
+      preLoaderRoute: typeof AuthedWorkoutsIndexRouteImport
       parentRoute: typeof AuthedRoute
+    }
+    '/_authed/workouts/$workout': {
+      id: '/_authed/workouts/$workout'
+      path: '/workouts/$workout'
+      fullPath: '/workouts/$workout'
+      preLoaderRoute: typeof AuthedWorkoutsWorkoutRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/exercises/p/$page': {
+      id: '/exercises/p/$page'
+      path: '/exercises/p/$page'
+      fullPath: '/exercises/p/$page'
+      preLoaderRoute: typeof ExercisesPPageRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authed/plans/$plan/': {
       id: '/_authed/plans/$plan/'
@@ -306,18 +299,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedPlansPlanIndexRouteImport
       parentRoute: typeof AuthedRoute
     }
-    '/_authed/workouts/create/$id': {
-      id: '/_authed/workouts/create/$id'
-      path: '/workouts/create/$id'
-      fullPath: '/workouts/create/$id'
-      preLoaderRoute: typeof AuthedWorkoutsCreateIdRouteImport
-      parentRoute: typeof AuthedRoute
-    }
     '/_authed/plans/$plan/edit': {
       id: '/_authed/plans/$plan/edit'
       path: '/plans/$plan/edit'
       fullPath: '/plans/$plan/edit'
       preLoaderRoute: typeof AuthedPlansPlanEditRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/workouts/create/': {
+      id: '/_authed/workouts/create/'
+      path: '/workouts/create'
+      fullPath: '/workouts/create/'
+      preLoaderRoute: typeof AuthedWorkoutsCreateIndexRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/workouts/create/$id': {
+      id: '/_authed/workouts/create/$id'
+      path: '/workouts/create/$id'
+      fullPath: '/workouts/create/$id'
+      preLoaderRoute: typeof AuthedWorkoutsCreateIdRouteImport
       parentRoute: typeof AuthedRoute
     }
   }

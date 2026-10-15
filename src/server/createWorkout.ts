@@ -10,7 +10,7 @@ const createWorkoutSchema = z.object({
 })
 
 export const createWorkout = createServerFn({ method: "POST" })
-  .inputValidator(createWorkoutSchema)
+  .validator(createWorkoutSchema)
   // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: shh
   .handler(async ({ data }) => {
     const supabase = createSupabaseServerClient()

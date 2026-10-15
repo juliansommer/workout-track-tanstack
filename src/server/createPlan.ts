@@ -4,7 +4,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server"
 import { planFormSchema } from "@/types/planForm"
 
 export const createPlan = createServerFn({ method: "POST" })
-  .inputValidator(planFormSchema)
+  .validator(planFormSchema)
   .handler(async ({ data }) => {
     const supabase = createSupabaseServerClient()
 

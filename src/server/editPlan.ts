@@ -10,7 +10,7 @@ const editPlanSchema = z.object({
 })
 
 export const editPlan = createServerFn({ method: "POST" })
-  .inputValidator(editPlanSchema)
+  .validator(editPlanSchema)
   .handler(async ({ data }) => {
     const supabase = createSupabaseServerClient()
 

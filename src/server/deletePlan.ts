@@ -8,7 +8,7 @@ const deletePlanSchema = z.object({
 })
 
 export const deletePlan = createServerFn({ method: "POST" })
-  .inputValidator(deletePlanSchema)
+  .validator(deletePlanSchema)
   .handler(async ({ data }) => {
     const supabase = createSupabaseServerClient()
 
