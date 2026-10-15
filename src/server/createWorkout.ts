@@ -11,7 +11,6 @@ const createWorkoutSchema = z.object({
 
 export const createWorkout = createServerFn({ method: "POST" })
   .validator(createWorkoutSchema)
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: shh
   .handler(async ({ data }) => {
     const supabase = createSupabaseServerClient()
 
@@ -40,50 +39,38 @@ export const createWorkout = createServerFn({ method: "POST" })
       throw new Error("Workout sets not found")
     }
 
-    const setKeys = Object.keys(data.sets)
-    for (let i = 0; i < setKeys.length; i++) {
-      const workoutExerciseId = crypto.randomUUID()
-
-      const key = setKeys[i]
-      if (key === undefined) {
-        throw new Error("Set key is undefined")
-      }
-
-      const exerciseSet = data.sets[key]
-      if (!exerciseSet) {
-        throw new Error("Exercise set not found")
-      }
-
-      const { error: error2 } = await supabase.from("workout_exercise").insert({
-        id: workoutExerciseId,
+    // build every row up front so each table takes a single insert
+    const workoutExercises = Object.entries(data.sets).map(
+      ([exerciseId, exerciseSets], order) => ({
+        id: crypto.randomUUID(),
         workout_id: workoutId,
-        exercise_id: key,
-        order: i,
-      })
+        exercise_id: exerciseId,
+        order,
+        exerciseSets,
+      }),
+    )
 
-      if (error2) {
-        throw new Error("Failed to create workout_exercise", { cause: error2 })
-      }
+    const { error: error2 } = await supabase
+      .from("workout_exercise")
+      .insert(workoutExercises.map(({ exerciseSets: _, ...row }) => row))
 
-      // loop through sets and insert them
-      for (let j = 0; j < exerciseSet.length; j++) {
-        const setId = crypto.randomUUID()
-        const set = exerciseSet[j]
-        if (!set) {
-          throw new Error("Set not found")
-        }
+    if (error2) {
+      throw new Error("Failed to create workout_exercise", { cause: error2 })
+    }
 
-        const { error: error3 } = await supabase.from("set").insert({
-          id: setId,
-          workout_exercise_id: workoutExerciseId,
+    const { error: error3 } = await supabase.from("set").insert(
+      workoutExercises.flatMap(({ id, exerciseSets }) =>
+        exerciseSets.map((set, order) => ({
+          id: crypto.randomUUID(),
+          workout_exercise_id: id,
           weight: set.weight,
           reps: set.reps,
-          order: j,
-        })
+          order,
+        })),
+      ),
+    )
 
-        if (error3) {
-          throw new Error("Failed to create set", { cause: error3 })
-        }
-      }
+    if (error3) {
+      throw new Error("Failed to create set", { cause: error3 })
     }
   })

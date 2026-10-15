@@ -45,16 +45,16 @@ export const editPlan = createServerFn({ method: "POST" })
       throw new Error("Failed to delete exercises", { cause: error2 })
     }
 
-    // insert the new exercises
-    for (const exercise of data.formData.exercises) {
-      const { error: error3 } = await supabase.from("plan_exercise").insert({
+    // insert the new exercises in one request
+    const { error: error3 } = await supabase.from("plan_exercise").insert(
+      data.formData.exercises.map((exercise) => ({
         plan_id: data.planId,
         exercise_id: exercise.value,
         sets: exercise.sets,
-      })
+      })),
+    )
 
-      if (error3) {
-        throw new Error("Failed to create plan_exercise", { cause: error3 })
-      }
+    if (error3) {
+      throw new Error("Failed to create plan_exercise", { cause: error3 })
     }
   })

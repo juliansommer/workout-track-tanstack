@@ -29,16 +29,16 @@ export const createPlan = createServerFn({ method: "POST" })
       throw new Error("Failed to create plan", { cause: error })
     }
 
-    // loop through exercises and insert them
-    for (const exercise of data.exercises) {
-      const { error: error2 } = await supabase.from("plan_exercise").insert({
+    // insert all exercises in one request
+    const { error: error2 } = await supabase.from("plan_exercise").insert(
+      data.exercises.map((exercise) => ({
         plan_id: planId,
         exercise_id: exercise.value,
         sets: exercise.sets,
-      })
+      })),
+    )
 
-      if (error2) {
-        throw new Error("Failed to create plan_exercise", { cause: error2 })
-      }
+    if (error2) {
+      throw new Error("Failed to create plan_exercise", { cause: error2 })
     }
   })
