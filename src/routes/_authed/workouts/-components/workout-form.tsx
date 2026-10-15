@@ -46,8 +46,8 @@ export default function WorkoutForm({
       await createWorkout({
         data: { id: workoutData.id, sets: data.exercises },
       })
-      queryClient.invalidateQueries({ queryKey: ["workouts-user"] })
-      router.navigate({ to: "/workouts" })
+      void queryClient.invalidateQueries({ queryKey: ["workouts-user"] })
+      await router.navigate({ to: "/workouts" })
     } catch (error) {
       throw new Error("Failed to create workout", { cause: error })
     }
@@ -81,7 +81,7 @@ export default function WorkoutForm({
                           (_, setIndex) => (
                             <div
                               className="grid grid-cols-[auto_1fr_1fr] items-center gap-4"
-                              // biome-ignore lint/suspicious/noArrayIndexKey: no other way to identify
+                              // oxlint-disable-next-line react/no-array-index-key -- sets have no id
                               key={setIndex}
                             >
                               <div className="font-medium">

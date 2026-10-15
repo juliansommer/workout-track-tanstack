@@ -9,8 +9,8 @@ import { cn } from "@/lib/utils"
 import { userPlansQueryOptions } from "@/queries/plans"
 
 export const Route = createFileRoute("/_authed/plans/")({
-  loader: ({ context }) =>
-    context.queryClient.query({
+  loader: async ({ context }) =>
+    await context.queryClient.query({
       ...userPlansQueryOptions(),
       staleTime: "static",
     }),

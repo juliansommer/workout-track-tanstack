@@ -9,8 +9,8 @@ import { cleanTimestamp, cn } from "@/lib/utils"
 import { userWorkoutsQueryOptions } from "@/queries/workouts"
 
 export const Route = createFileRoute("/_authed/workouts/")({
-  loader: ({ context }) =>
-    context.queryClient.query({
+  loader: async ({ context }) =>
+    await context.queryClient.query({
       ...userWorkoutsQueryOptions(),
       staleTime: "static",
     }),
@@ -55,7 +55,7 @@ function Workouts() {
                   <p className="text-muted-foreground text-sm">
                     {cleanTimestamp(workout.created_at)}
                   </p>
-                  <ul className="list-disc pt-2 pl-5 text-muted-foreground text-sm">
+                  <ul className="text-muted-foreground list-disc pt-2 pl-5 text-sm">
                     {workout.workout_exercise.map((exercise) => (
                       <li key={exercise.exercise_id}>
                         {exercise.exercise.name}

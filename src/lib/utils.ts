@@ -17,7 +17,7 @@ export function cleanTimestamp(timestamp: string): string {
   const date = new Date(timestamp)
 
   if (Number.isNaN(date.getTime())) {
-    throw new Error("Invalid date")
+    throw new TypeError("Invalid date")
   }
 
   const year = date.getFullYear()
@@ -29,15 +29,15 @@ export function cleanTimestamp(timestamp: string): string {
 
 const TRIM_HYPHENS_START_REGEX = /^-+/
 const TRIM_HYPHENS_END_REGEX = /-+$/
-const IMAGE_EXTENSION_REGEX = /\.(jpg|jpeg|png)$/i
+const IMAGE_EXTENSION_REGEX = /\.(?:jpg|jpeg|png)$/i
 
 export function createSlug(string: string): string {
   return string
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "-")
+    .replaceAll(/\s+/g, "-")
+    .replaceAll(/[^\w-]+/g, "")
+    .replaceAll(/--+/g, "-")
     .replace(TRIM_HYPHENS_START_REGEX, "")
     .replace(TRIM_HYPHENS_END_REGEX, "")
 }

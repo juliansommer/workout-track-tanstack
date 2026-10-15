@@ -9,7 +9,7 @@
     "**/routeTree.gen.ts": true
   },
   "[css][json][jsonc]": {
-    "editor.defaultFormatter": "biomejs.biome",
+    "editor.defaultFormatter": "oxc.oxc-vscode",
     "editor.tabSize": 2
   },
   "[go]": {
@@ -18,10 +18,9 @@
   },
   "[javascript][javascriptreact][typescript][typescriptreact]": {
     "editor.codeActionsOnSave": {
-      "source.fixAll.biome": "explicit",
-      "source.organizeImports.biome": "explicit"
+      "source.fixAll.oxc": "explicit"
     },
-    "editor.defaultFormatter": "biomejs.biome",
+    "editor.defaultFormatter": "oxc.oxc-vscode",
     "editor.tabSize": 2
   },
   "editor.formatOnSave": true,

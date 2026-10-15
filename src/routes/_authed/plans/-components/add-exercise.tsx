@@ -14,9 +14,9 @@ export default function AddExercise({ options, field }: AddExerciseProps) {
     <div className="flex items-center space-x-4">
       <div className="w-60 md:w-96">
         <Select
-          onChange={(selectedOption) =>
+          onChange={(selectedOption) => {
             field.onChange({ ...field.value, ...selectedOption })
-          }
+          }}
           options={options}
           styles={{
             control: (provided) => ({
@@ -40,7 +40,7 @@ export default function AddExercise({ options, field }: AddExerciseProps) {
           onChange={(e) => {
             field.onChange({
               ...field.value,
-              sets: e.target.value !== "" ? Number(e.target.value) : "",
+              sets: e.target.value === "" ? "" : Number(e.target.value),
             })
           }}
           placeholder="Sets"

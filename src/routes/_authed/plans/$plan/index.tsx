@@ -7,11 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { convertToWebp, createSlug } from "@/lib/utils"
 import { specificPlanQueryOptions } from "@/queries/plans"
+
 import DeletePlan from "../-components/delete-plan"
 
 export const Route = createFileRoute("/_authed/plans/$plan/")({
-  loader: ({ params, context }) =>
-    context.queryClient.query({
+  loader: async ({ params, context }) =>
+    await context.queryClient.query({
       ...specificPlanQueryOptions(params.plan),
       staleTime: "static",
     }),
@@ -35,7 +36,7 @@ function PlanDetails() {
       <Card>
         <CardHeader className="flex flex-col space-y-1.5 p-6">
           <div className="flex items-center justify-between">
-            <CardTitle className="font-bold text-2xl">{data.name}</CardTitle>
+            <CardTitle className="text-2xl font-bold">{data.name}</CardTitle>
             <div className="flex space-x-2">
               <Link
                 className={buttonVariants({
@@ -55,13 +56,13 @@ function PlanDetails() {
         <CardContent>
           {data.notes && (
             <div className="mb-6">
-              <h2 className="mb-2 font-semibold text-xl">Notes</h2>
+              <h2 className="mb-2 text-xl font-semibold">Notes</h2>
               <p className="text-neutral-700 dark:text-neutral-300">
                 {data.notes}
               </p>
             </div>
           )}
-          <h2 className="mb-4 font-semibold text-xl">Exercises</h2>
+          <h2 className="mb-4 text-xl font-semibold">Exercises</h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {data.exercises.map((exercise) => (
               <Card className="overflow-hidden" key={exercise.id}>
@@ -80,10 +81,10 @@ function PlanDetails() {
                     />
                   </div>
                   <CardContent className="p-4">
-                    <h3 className="mb-2 font-semibold text-lg">
+                    <h3 className="mb-2 text-lg font-semibold">
                       {exercise.name}
                     </h3>
-                    <div className="flex items-center text-neutral-600 text-sm dark:text-neutral-500">
+                    <div className="flex items-center text-sm text-neutral-600 dark:text-neutral-500">
                       <Dumbbell className="mr-2 h-4 w-4" />
                       <span>{exercise.sets} sets</span>
                     </div>

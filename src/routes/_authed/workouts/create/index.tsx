@@ -7,8 +7,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { userPlansQueryOptions } from "@/queries/plans"
 
 export const Route = createFileRoute("/_authed/workouts/create/")({
-  loader: ({ context }) =>
-    context.queryClient.query({
+  loader: async ({ context }) =>
+    await context.queryClient.query({
       ...userPlansQueryOptions(),
       staleTime: "static",
     }),
@@ -29,7 +29,7 @@ function CreateWorkout() {
   return (
     <>
       <Heading title="Create Workout" />
-      <h2 className="mb-6 text-center font-semibold text-xl md:text-2xl">
+      <h2 className="mb-6 text-center text-xl font-semibold md:text-2xl">
         Select Plan
       </h2>
       <div className="container mx-auto py-8">
@@ -60,7 +60,7 @@ function PendingCreateWorkout() {
   return (
     <>
       <Heading title="Create Workout" />
-      <h2 className="mb-6 text-center font-semibold text-xl md:text-2xl">
+      <h2 className="mb-6 text-center text-xl font-semibold md:text-2xl">
         Select Plan
       </h2>
       <div className="container mx-auto py-8">

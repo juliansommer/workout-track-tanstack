@@ -5,6 +5,7 @@ import { Heading, HeadingSkeleton } from "@/components/heading"
 import { Skeleton } from "@/components/ui/skeleton"
 import { specificPlanQueryOptions } from "@/queries/plans"
 import { workoutTargetsQueryOptions } from "@/queries/workouts"
+
 import WorkoutForm from "../-components/workout-form"
 import WorkoutFormSkeleton from "../-components/workout-form-skeleton"
 
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/_authed/workouts/create/$id")({
         staleTime: "static",
       }),
     ])
+
     return planData.name
   },
   head: ({ loaderData }) => ({

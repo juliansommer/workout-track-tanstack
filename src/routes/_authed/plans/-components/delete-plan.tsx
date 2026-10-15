@@ -11,8 +11,8 @@ export default function DeletePlan({ planId }: { planId: string }) {
 
   async function handleDelete() {
     await deletePlan({ data: { planId } })
-    queryClient.invalidateQueries({ queryKey: ["plans-user"] })
-    router.navigate({ to: "/plans" })
+    void queryClient.invalidateQueries({ queryKey: ["plans-user"] })
+    await router.navigate({ to: "/plans" })
   }
 
   return (

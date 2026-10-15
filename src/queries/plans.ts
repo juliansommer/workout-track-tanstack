@@ -6,13 +6,13 @@ import { getUserPlans } from "@/fetching/getUserPlans"
 export const userPlansQueryOptions = () =>
   queryOptions({
     queryKey: ["plans-user"],
-    queryFn: () => getUserPlans(),
-    staleTime: 60 * 5 * 1000, // 5 minutes
+    queryFn: async () => await getUserPlans(),
+    staleTime: 60 * 5 * 1000,
   })
 
 export const specificPlanQueryOptions = (planId: string) =>
   queryOptions({
     queryKey: ["plans-specific", planId],
-    queryFn: () => getSpecificPlan(planId),
-    staleTime: 60 * 5 * 1000, // 5 minutes
+    queryFn: async () => await getSpecificPlan(planId),
+    staleTime: 60 * 5 * 1000,
   })

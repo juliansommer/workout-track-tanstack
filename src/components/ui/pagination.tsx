@@ -19,26 +19,35 @@ export function Pagination({
     />
   )
 }
+
 Pagination.displayName = "Pagination"
 
-export const PaginationContent = forwardRef<
-  HTMLUListElement,
-  React.ComponentProps<"ul">
->(({ className, ...props }, ref) => (
-  <ul
-    className={cn("flex flex-row items-center gap-1", className)}
-    ref={ref}
-    {...props}
-  />
-))
+function PaginationContentInner(
+  { className, ...props }: React.ComponentProps<"ul">,
+  ref: React.ForwardedRef<HTMLUListElement>,
+) {
+  return (
+    <ul
+      className={cn("flex flex-row items-center gap-1", className)}
+      ref={ref}
+      {...props}
+    />
+  )
+}
+
+export const PaginationContent = forwardRef(PaginationContentInner)
+
 PaginationContent.displayName = "PaginationContent"
 
-export const PaginationItem = forwardRef<
-  HTMLLIElement,
-  React.ComponentProps<"li">
->(({ className, ...props }, ref) => (
-  <li className={cn("", className)} ref={ref} {...props} />
-))
+function PaginationItemInner(
+  { className, ...props }: React.ComponentProps<"li">,
+  ref: React.ForwardedRef<HTMLLIElement>,
+) {
+  return <li className={cn("", className)} ref={ref} {...props} />
+}
+
+export const PaginationItem = forwardRef(PaginationItemInner)
+
 PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkProps = {
@@ -66,6 +75,7 @@ export function PaginationLink({
     />
   )
 }
+
 PaginationLink.displayName = "PaginationLink"
 
 export function PaginationPrevious({
@@ -84,6 +94,7 @@ export function PaginationPrevious({
     </PaginationLink>
   )
 }
+
 PaginationPrevious.displayName = "PaginationPrevious"
 
 export function PaginationNext({
@@ -102,6 +113,7 @@ export function PaginationNext({
     </PaginationLink>
   )
 }
+
 PaginationNext.displayName = "PaginationNext"
 
 export function PaginationEllipsis({
@@ -119,4 +131,5 @@ export function PaginationEllipsis({
     </span>
   )
 }
+
 PaginationEllipsis.displayName = "PaginationEllipsis"

@@ -18,6 +18,7 @@ export function getRouter() {
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,
   })
+
   setupRouterSsrQueryIntegration({
     router,
     queryClient,

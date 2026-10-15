@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { createPlan } from "@/server/createPlan"
 import { editPlan } from "@/server/editPlan"
 import { type PlanFormData, planFormSchema } from "@/types/planForm"
+
 import AddExercise from "./add-exercise"
 
 interface PredefinedData {
@@ -42,16 +43,19 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
   } = useForm<PlanFormData>({
     resolver: zodResolver(planFormSchema),
   })
+
   const [components, setComponents] = useState<number[]>([])
 
   const router = useRouter()
   const queryClient = useQueryClient()
 
   // Initialize form with plan data
+  /* oxlint-disable react-you-might-not-need-an-effect/no-event-handler, react-you-might-not-need-an-effect/no-pass-data-to-parent -- form state lives in useForm */
   useEffect(() => {
     if (planData) {
       setValue("name", planData.name)
       setValue("notes", planData.notes ?? "")
+      // oxlint-disable-next-line unicorn/no-array-for-each
       planData.exercises.forEach((exercise, index) => {
         setValue(`exercises.${index}`, exercise)
       })
@@ -59,12 +63,14 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
       setComponents(planData.exercises.map((_, index) => index))
     }
   }, [planData, setValue])
+  /* oxlint-enable react-you-might-not-need-an-effect/no-event-handler, react-you-might-not-need-an-effect/no-pass-data-to-parent */
 
   function addComponent() {
     setComponents((prevComponents) => {
       if (prevComponents.length >= 10) {
         return prevComponents
       }
+
       return [...prevComponents, prevComponents.length]
     })
   }
@@ -73,7 +79,9 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
     unregister(`exercises.${index}`)
     setComponents(components.filter((_, i) => i !== index))
 
+    // oxlint-disable-next-line react/incompatible-library
     const currentFormData = watch()
+
     // Clean up the exercises array to remove any undefined values
     const cleanedExercises = currentFormData.exercises.filter(
       (exercise) => exercise !== undefined,
@@ -89,19 +97,19 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
     if (planData) {
       try {
         await editPlan({ data: { planId: planData.id, formData } })
-        queryClient.invalidateQueries({ queryKey: ["plans-user"] })
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({ queryKey: ["plans-user"] })
+        void queryClient.invalidateQueries({
           queryKey: ["plans-specific", planData.id],
         })
-        router.navigate({ to: "/plans" })
+        await router.navigate({ to: "/plans" })
       } catch (error) {
         throw new Error("Failed to edit plan", { cause: error })
       }
     } else {
       try {
         await createPlan({ data: formData })
-        queryClient.invalidateQueries({ queryKey: ["plans-user"] })
-        router.navigate({ to: "/plans" })
+        void queryClient.invalidateQueries({ queryKey: ["plans-user"] })
+        await router.navigate({ to: "/plans" })
       } catch (error) {
         throw new Error("Failed to create plan", { cause: error })
       }
@@ -144,7 +152,9 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
                       />
                       <Button
                         className="ml-2"
-                        onClick={() => deleteComponent(index)}
+                        onClick={() => {
+                          deleteComponent(index)
+                        }}
                         type="button"
                         variant="outline"
                       >
@@ -154,10 +164,9 @@ export default function PlanForm({ data, planData }: PlanFormProps) {
                     </div>
                     {errors.exercises?.[index] && (
                       <div className="pt-2">
-                        {typeof errors.exercises[index] === "object" &&
-                          "message" in errors.exercises[index] && (
-                            <p>{errors.exercises[index].message}</p>
-                          )}
+                        {errors.exercises[index].message && (
+                          <p>{errors.exercises[index].message}</p>
+                        )}
                         {errors.exercises[index].label && (
                           <p>{errors.exercises[index].label.message}</p>
                         )}

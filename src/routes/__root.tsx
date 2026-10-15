@@ -11,6 +11,7 @@ import { DefaultCatchBoundary } from "@/components/default-catch-boundary"
 import Nav from "@/components/nav"
 import { NotFound } from "@/components/not-found"
 import { seo } from "@/lib/seo"
+
 import appCss from "@/styles/app.css?url"
 
 export const Route = createRootRouteWithContext<{
@@ -42,13 +43,11 @@ export const Route = createRootRouteWithContext<{
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
-  errorComponent: (props) => {
-    return (
-      <RootDocument>
-        <DefaultCatchBoundary {...props} />
-      </RootDocument>
-    )
-  },
+  errorComponent: (props) => (
+    <RootDocument>
+      <DefaultCatchBoundary {...props} />
+    </RootDocument>
+  ),
   notFoundComponent: () => <NotFound />,
   component: RootComponent,
 })

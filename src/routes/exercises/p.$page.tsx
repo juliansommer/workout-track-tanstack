@@ -4,10 +4,9 @@ import { Heading } from "@/components/heading"
 import PaginationContainer from "@/components/pagination-container"
 import exercises from "@/lib/exercises.json"
 import { createSlug, titleCase } from "@/lib/utils"
-import type { Database } from "@/types/supabase"
 
 type ExerciseData = Pick<
-  Database["public"]["Tables"]["exercise"]["Row"],
+  (typeof exercises)[number],
   "name" | "image" | "primary_muscles"
 >
 
@@ -19,7 +18,8 @@ export const Route = createFileRoute("/exercises/p/$page")({
     const page = Number(params.page)
     const startIndex = (page - 1) * 10
     const endIndex = page * 10
-    return exercises.slice(startIndex, endIndex) as ExerciseData[]
+
+    return exercises.slice(startIndex, endIndex)
   },
   head: ({ params }) => ({
     meta: [
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/exercises/p/$page")({
     ],
   }),
   component: Exercises,
-  preloadStaleTime: 1000 * 60 * 60 * 24, // 24 hours
+  preloadStaleTime: 1000 * 60 * 60 * 24,
 })
 
 function Exercises() {
@@ -69,7 +69,7 @@ function ExerciseCard({ exercise }: { exercise: ExerciseData }) {
             width={100}
           />
           <div>
-            <h2 className="font-medium text-lg">{exercise.name}</h2>
+            <h2 className="text-lg font-medium">{exercise.name}</h2>
           </div>
         </div>
         <div className="flex items-center space-x-4">

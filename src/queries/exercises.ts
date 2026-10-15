@@ -5,6 +5,6 @@ import { getAllExercises } from "@/fetching/getAllExercises"
 export const getAllExerciseNamesQueryOptions = () =>
   queryOptions({
     queryKey: ["exercises-all"],
-    queryFn: () => getAllExercises(),
-    staleTime: 60 * 5 * 1000, // 5 minutes
+    queryFn: async () => await getAllExercises(),
+    staleTime: 60 * 5 * 1000,
   })

@@ -18,6 +18,7 @@ export const createPlan = createServerFn({ method: "POST" })
 
     // insert the plan
     const planId = crypto.randomUUID()
+
     const { error } = await supabase.from("plan").insert({
       id: planId,
       user_id: user,

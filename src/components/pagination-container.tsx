@@ -13,6 +13,7 @@ export default function PaginationContainer({
   route,
 }: PaginationContainerProps) {
   const router = useRouter()
+
   if (totalPages === 1) {
     return null
   }
@@ -22,9 +23,9 @@ export default function PaginationContainer({
       <Pagination
         className="cursor-pointer rounded-lg border border-neutral-200 bg-white text-neutral-950 shadow-xs dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50"
         initialPage={1}
-        onChange={(page) =>
-          router.navigate({ to: `${route}/p/${page}`, replace: true })
-        }
+        onChange={(page) => {
+          void router.navigate({ to: `${route}/p/${page}`, replace: true })
+        }}
         page={currentPage}
         total={totalPages}
       />

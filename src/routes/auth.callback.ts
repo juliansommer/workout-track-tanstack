@@ -13,17 +13,21 @@ export const Route = createFileRoute("/auth/callback")({
         if (code) {
           const supabase = createSupabaseServerClient()
           const { error } = await supabase.auth.exchangeCodeForSession(code)
+
           if (!error) {
-            const forwardedHost = request.headers.get("x-forwarded-host") // original origin before load balancer
+            // original origin before load balancer
+            const forwardedHost = request.headers.get("x-forwarded-host")
             let redirectUrl: string
+
             if (isLocalEnv) {
               // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
-              redirectUrl = `${url.origin}`
+              redirectUrl = url.origin
             } else if (forwardedHost) {
               redirectUrl = `https://${forwardedHost}`
             } else {
               redirectUrl = url.origin
             }
+
             // Create a Response with mutable headers so TanStack Start can merge cookies
             return new Response(null, {
               status: 302,

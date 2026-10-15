@@ -7,11 +7,12 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cleanTimestamp, convertToWebp } from "@/lib/utils"
 import { specificWorkoutQueryOptions } from "@/queries/workouts"
+
 import WorkoutFormSkeleton from "./-components/workout-form-skeleton"
 
 export const Route = createFileRoute("/_authed/workouts/$workout")({
-  loader: ({ params, context }) =>
-    context.queryClient.query({
+  loader: async ({ params, context }) =>
+    await context.queryClient.query({
       ...specificWorkoutQueryOptions(params.workout),
       staleTime: "static",
     }),

@@ -3,6 +3,7 @@ import { Dumbbell } from "lucide-react"
 import { useEffect, useState } from "react"
 
 import { createSupabaseBrowserClient } from "@/lib/supabase/client"
+
 import { buttonVariants } from "./ui/button"
 import {
   DropdownMenu,
@@ -15,15 +16,19 @@ export default function Nav() {
   const [user, setUser] = useState<string | null>(null)
   const router = useRouter()
 
+  // oxlint-disable-next-line react-you-might-not-need-an-effect/no-external-store-subscription -- getSession is async, so there is no sync snapshot
   useEffect(() => {
     const supabase = createSupabaseBrowserClient()
+
     async function fetchUser() {
       const {
         data: { session },
       } = await supabase.auth.getSession()
+
       setUser(session?.user?.id ?? null)
     }
-    fetchUser()
+
+    void fetchUser()
 
     const {
       data: { subscription },
@@ -39,12 +44,12 @@ export default function Nav() {
   async function handleLogout() {
     const supabase = createSupabaseBrowserClient()
     await supabase.auth.signOut()
-    router.navigate({ to: "/" })
-    router.invalidate()
+    await router.navigate({ to: "/" })
+    await router.invalidate()
   }
 
   return (
-    <nav className="mb-16 flex h-full w-full flex-between items-center justify-between pt-3">
+    <nav className="flex-between mb-16 flex h-full w-full items-center justify-between pt-3">
       <Link className="flex items-center justify-center" to="/">
         <Dumbbell className="mr-2 h-6 w-6" />
         <span className="font-bold">Workout Track</span>

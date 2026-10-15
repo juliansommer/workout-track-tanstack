@@ -17,10 +17,10 @@ function Home() {
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h1 className="font-bold text-2xl tracking-tighter sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl/none">
+                  <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl/none">
                     Track Your Fitness Journey Like Never Before
                   </h1>
-                  <p className="max-w-full text-muted-foreground text-sm md:text-base lg:text-xl">
+                  <p className="text-muted-foreground max-w-full text-sm md:text-base lg:text-xl">
                     Workout Track is an open source app that helps you monitor
                     your workouts, set goals, and achieve your fitness dreams.
                     Start your journey to a healthier you today.
@@ -52,7 +52,7 @@ function Home() {
                 </div>
               </div>
               <div className="flex items-center justify-center">
-                <div className="w-full overflow-hidden rounded-xl border bg-muted md:aspect-square lg:aspect-video">
+                <div className="bg-muted w-full overflow-hidden rounded-xl border md:aspect-square lg:aspect-video">
                   <img
                     alt="App Screenshot"
                     className="h-full w-full object-cover object-center"

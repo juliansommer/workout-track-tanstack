@@ -4,12 +4,13 @@ import { createFileRoute } from "@tanstack/react-router"
 import { Heading } from "@/components/heading"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getAllExerciseNamesQueryOptions } from "@/queries/exercises"
+
 import PlanForm from "./-components/plan-form"
 import PlanFormSkeleton from "./-components/plan-form-skeleton"
 
 export const Route = createFileRoute("/_authed/plans/create")({
-  loader: ({ context }) =>
-    context.queryClient.query({
+  loader: async ({ context }) =>
+    await context.queryClient.query({
       ...getAllExerciseNamesQueryOptions(),
       staleTime: "static",
     }),

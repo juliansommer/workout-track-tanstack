@@ -5,6 +5,7 @@ import { Heading } from "@/components/heading"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getAllExerciseNamesQueryOptions } from "@/queries/exercises"
 import { specificPlanQueryOptions } from "@/queries/plans"
+
 import PlanForm from "../-components/plan-form"
 import PlanFormSkeleton from "../-components/plan-form-skeleton"
 
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/_authed/plans/$plan/edit")({
         staleTime: "static",
       }),
     ])
+
     return planData.name
   },
   head: ({ loaderData }) => ({
@@ -35,9 +37,11 @@ export const Route = createFileRoute("/_authed/plans/$plan/edit")({
 
 function EditPlan() {
   const { plan } = Route.useParams()
+
   const { data: exerciseData } = useSuspenseQuery(
     getAllExerciseNamesQueryOptions(),
   )
+
   const { data: planData } = useSuspenseQuery(specificPlanQueryOptions(plan))
 
   const newPlanData = {

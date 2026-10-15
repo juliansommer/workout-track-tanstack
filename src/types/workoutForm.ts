@@ -4,7 +4,7 @@ import { z } from "zod"
  * Base object for sets, used by itself for server-side validation
  */
 export const setsSchema = z.record(
-  z.string(), // exercise.id as key
+  z.string(),
   z.array(
     z.object({
       weight: z
@@ -28,6 +28,7 @@ export const setsSchema = z.record(
     }),
   ),
 )
+
 export type SetsSchema = z.infer<typeof setsSchema>
 
 /**

@@ -24,6 +24,7 @@ export const createWorkout = createServerFn({ method: "POST" })
 
     // create main workout record
     const workoutId = crypto.randomUUID()
+
     const { error } = await supabase.from("workout").insert({
       id: workoutId,
       user_id: user,
@@ -50,9 +51,14 @@ export const createWorkout = createServerFn({ method: "POST" })
       }),
     )
 
-    const { error: error2 } = await supabase
-      .from("workout_exercise")
-      .insert(workoutExercises.map(({ exerciseSets: _, ...row }) => row))
+    const { error: error2 } = await supabase.from("workout_exercise").insert(
+      workoutExercises.map(({ id, workout_id, exercise_id, order }) => ({
+        id,
+        workout_id,
+        exercise_id,
+        order,
+      })),
+    )
 
     if (error2) {
       throw new Error("Failed to create workout_exercise", { cause: error2 })

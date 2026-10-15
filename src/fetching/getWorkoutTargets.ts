@@ -31,6 +31,7 @@ export async function getWorkoutTargets(planId: string) {
       // so we can return an empty object
       return {}
     }
+
     throw new Error("Failed to fetch workout details", { cause: error })
   }
 
@@ -50,7 +51,6 @@ export async function getWorkoutTargets(planId: string) {
           // Use set order as the set number (zero-indexed)
           const setNumber = set.order
 
-          formattedData[exerciseId] = formattedData[exerciseId] ?? {}
           formattedData[exerciseId][setNumber] = {
             weight: set.weight,
             reps: set.reps,

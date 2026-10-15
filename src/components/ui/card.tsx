@@ -28,9 +28,10 @@ export function CardHeader({
 
 export function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
   return (
+    // oxlint-disable-next-line jsx-a11y/heading-has-content -- children come through props
     <h3
       className={cn(
-        "font-semibold text-2xl leading-none tracking-tight",
+        "text-2xl leading-none font-semibold tracking-tight",
         className,
       )}
       data-slot="card-title"
@@ -46,7 +47,7 @@ export function CardDescription({
   return (
     <p
       className={cn(
-        "text-neutral-500 text-sm dark:text-neutral-400",
+        "text-sm text-neutral-500 dark:text-neutral-400",
         className,
       )}
       data-slot="card-description"

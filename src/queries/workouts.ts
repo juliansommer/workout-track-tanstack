@@ -7,20 +7,20 @@ import { getWorkoutTargets } from "@/fetching/getWorkoutTargets"
 export const userWorkoutsQueryOptions = () =>
   queryOptions({
     queryKey: ["workouts-user"],
-    queryFn: () => getUserWorkouts(),
-    staleTime: 60 * 5 * 1000, // 5 minutes
+    queryFn: async () => await getUserWorkouts(),
+    staleTime: 60 * 5 * 1000,
   })
 
 export const specificWorkoutQueryOptions = (workoutId: string) =>
   queryOptions({
     queryKey: ["workouts-specific", workoutId],
-    queryFn: () => getSpecificWorkout(workoutId),
-    staleTime: 60 * 5 * 1000, // 5 minutes
+    queryFn: async () => await getSpecificWorkout(workoutId),
+    staleTime: 60 * 5 * 1000,
   })
 
 export const workoutTargetsQueryOptions = (planId: string) =>
   queryOptions({
     queryKey: ["workout-targets", planId],
-    queryFn: () => getWorkoutTargets(planId),
-    staleTime: 60 * 5 * 1000, // 5 minutes
+    queryFn: async () => await getWorkoutTargets(planId),
+    staleTime: 60 * 5 * 1000,
   })

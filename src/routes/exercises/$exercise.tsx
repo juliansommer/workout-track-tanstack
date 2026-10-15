@@ -13,9 +13,11 @@ import { createSlug, titleCase } from "@/lib/utils"
 export const Route = createFileRoute("/exercises/$exercise")({
   loader: ({ params }) => {
     const data = getExerciseBySlug(params.exercise)
+
     if (!data) {
       throw new Error("Exercise not found")
     }
+
     return data
   },
   head: ({ loaderData }) => ({
@@ -26,7 +28,7 @@ export const Route = createFileRoute("/exercises/$exercise")({
     ],
   }),
   component: ExercisePage,
-  preloadStaleTime: 1000 * 60 * 60 * 24, // 24 hours
+  preloadStaleTime: 1000 * 60 * 60 * 24,
 })
 
 function ExercisePage() {
@@ -49,7 +51,7 @@ function ExercisePage() {
               <div className="flex flex-wrap items-center gap-2">
                 {data.primary_muscles.map((muscle) => (
                   <div
-                    className="rounded-md bg-neutral-200 px-3 py-1 font-medium text-accent-foreground text-xs dark:bg-neutral-500"
+                    className="text-accent-foreground rounded-md bg-neutral-200 px-3 py-1 text-xs font-medium dark:bg-neutral-500"
                     key={muscle}
                   >
                     {titleCase(muscle)}
@@ -57,7 +59,7 @@ function ExercisePage() {
                 ))}
                 {data.secondary_muscles?.map((muscle) => (
                   <div
-                    className="rounded-md bg-neutral-200 px-3 py-1 font-medium text-accent-foreground text-xs dark:bg-neutral-500"
+                    className="text-accent-foreground rounded-md bg-neutral-200 px-3 py-1 text-xs font-medium dark:bg-neutral-500"
                     key={muscle}
                   >
                     {titleCase(muscle)}
@@ -66,7 +68,7 @@ function ExercisePage() {
               </div>
             </div>
             <Collapsible className="space-y-4 pb-10">
-              <CollapsibleTrigger className="flex w-full items-center justify-between rounded-md bg-neutral-200 px-4 py-3 font-medium text-lg transition-colors hover:bg-neutral-300 dark:bg-neutral-500 dark:hover:bg-neutral-600 [&[data-state=open]>svg]:rotate-90">
+              <CollapsibleTrigger className="flex w-full items-center justify-between rounded-md bg-neutral-200 px-4 py-3 text-lg font-medium transition-colors hover:bg-neutral-300 dark:bg-neutral-500 dark:hover:bg-neutral-600 [&[data-state=open]>svg]:rotate-90">
                 Instructions
                 <ChevronRightIcon className="h-5 w-5 transition-all" />
               </CollapsibleTrigger>

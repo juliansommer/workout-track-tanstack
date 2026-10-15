@@ -8,14 +8,16 @@ export function NotFound({ children }: { children?: React.ReactNode }) {
       </div>
       <p className="flex flex-wrap items-center gap-2">
         <button
-          className="rounded-sm bg-emerald-500 px-2 py-1 font-black text-sm text-white uppercase"
-          onClick={() => window.history.back()}
+          className="rounded-sm bg-emerald-500 px-2 py-1 text-sm font-black text-white uppercase"
+          onClick={() => {
+            window.history.back()
+          }}
           type="button"
         >
           Go back
         </button>
         <Link
-          className="rounded-sm bg-cyan-600 px-2 py-1 font-black text-sm text-white uppercase"
+          className="rounded-sm bg-cyan-600 px-2 py-1 text-sm font-black text-white uppercase"
           to="/"
         >
           Start Over
